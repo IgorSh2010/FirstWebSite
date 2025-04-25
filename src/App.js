@@ -3,25 +3,45 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Home from './Pages/Home'
 import Plans from './Pages/Plans'
 import Finished from './Pages/Finished'
+import ProductDetails from './Pages/ProductDetails'
 
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <Router>
         {/* HEADER */}
-        <header className="bg-white shadow-md p-4 flex items-center justify-between">
+        <header className="text-white px-6 py-6 shadow-md bg-cover bg-center"
+                style={{ backgroundImage: "url('/flowers-rozi-buket-tsveti-rozovie-knigi.jpeg')" }}>
+          <div className="bg-black/50 p-4 rounded flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <img
+                src="/LORALEY.jpg"
+                alt="logo"
+                className="w-20 h-20 rounded-full bg-white p-1"
+              />
+              <h1 className="text-2xl font-bold font-montserrat tracking-wide">LS STUDIO</h1>
+            </div>
+            <nav className="space-x-4 hidden md:flex">
+              <a href="/" className="hover:underline">Головна</a>
+              <a href="/plans" className="hover:underline">Каталог товарів</a>
+              <a href="/products" className="hover:underline">Товари</a>
+              <a href="/about" className="hover:underline">Про нас</a>
+            </nav>
+          </div>
+        </header>
+        {/*<header className="bg-white shadow-md p-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-blue-600 tracking-wide">ФУНДАЦІЯ</h1>
           <nav className="space-x-4">
           <Link to="/" className="text-gray-600 hover:text-blue-600">Головна</Link>
-          <Link to="/plans" className="text-gray-600 hover:text-blue-600">Плани</Link>
+          <Link to="/plans" className="text-gray-600 hover:text-blue-600">Каталог товарів</Link>
           <Link to="/finished" className="text-gray-600 hover:text-blue-600">Проведена робота</Link>
             <a href="#" className="text-gray-600 hover:text-blue-600">Про нас</a>
           </nav>
         </header>
 
-        <div className="bg-red-500 text-white p-4">
+        {/*<div className="bg-red-500 text-white p-4">
           ТУТ МОЖЕ БУТИ ЯКАСЬ ЦІКАВА ІНФОРМАЦІЯ ЧИ, МОЖЛИВО, ЕКСТРЕНІ ПОВІДОМЛЕННЯ!
-        </div>
+        </div>*/}
 
         {/*CONTENT SECTION*/}
         <div className="flex flex-1">
@@ -41,6 +61,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/plans" element={<Plans />} />
             <Route path="/finished" element={<Finished />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
           </Routes>
         </main>
 
