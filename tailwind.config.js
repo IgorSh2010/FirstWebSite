@@ -4,7 +4,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        montserrat: ['Montserrat', 'sans-serif'],
+        montserrat: ['"Montserrat"', 'cursive'],
+        greatvibes: ['"Great Vibes"', 'cursive'],
+        dancing: ['"Dancing Script"', 'cursive'],
       },
     },
   },

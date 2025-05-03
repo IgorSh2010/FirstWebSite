@@ -1,44 +1,19 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import Header from './components/Header'
 import Home from './Pages/Home'
-import Plans from './Pages/Plans'
+import Products from './Pages/ProductsMain'
 import Finished from './Pages/Finished'
 import ProductDetails from './Pages/ProductDetails'
 
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Router>
+      <Router>      
         {/* HEADER */}
-        <header className="text-white px-6 py-6 shadow-md bg-cover bg-center"
-                style={{ backgroundImage: "url('/flowers-rozi-buket-tsveti-rozovie-knigi.jpeg')" }}>
-          <div className="bg-black/50 p-4 rounded flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <img
-                src="/LORALEY.jpg"
-                alt="logo"
-                className="w-20 h-20 rounded-full bg-white p-1"
-              />
-              <h1 className="text-2xl font-bold font-montserrat tracking-wide">LS STUDIO</h1>
-            </div>
-            <nav className="space-x-4 hidden md:flex">
-              <a href="/" className="hover:underline">Головна</a>
-              <a href="/plans" className="hover:underline">Каталог товарів</a>
-              <a href="/products" className="hover:underline">Товари</a>
-              <a href="/about" className="hover:underline">Про нас</a>
-            </nav>
-          </div>
-        </header>
-        {/*<header className="bg-white shadow-md p-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-blue-600 tracking-wide">ФУНДАЦІЯ</h1>
-          <nav className="space-x-4">
-          <Link to="/" className="text-gray-600 hover:text-blue-600">Головна</Link>
-          <Link to="/plans" className="text-gray-600 hover:text-blue-600">Каталог товарів</Link>
-          <Link to="/finished" className="text-gray-600 hover:text-blue-600">Проведена робота</Link>
-            <a href="#" className="text-gray-600 hover:text-blue-600">Про нас</a>
-          </nav>
-        </header>
-
+        <header> <Header /> </header>
+        
+        {/*NEWS SECTION*/}
         {/*<div className="bg-red-500 text-white p-4">
           ТУТ МОЖЕ БУТИ ЯКАСЬ ЦІКАВА ІНФОРМАЦІЯ ЧИ, МОЖЛИВО, ЕКСТРЕНІ ПОВІДОМЛЕННЯ!
         </div>*/}
@@ -46,27 +21,31 @@ function App() {
         {/*CONTENT SECTION*/}
         <div className="flex flex-1">
           {/* LEFT SIDEBAR */}
-          <aside className="w-1/6 bg-gray-100 shadow-md p-4 hidden md:block border-r">
-            <h2 className="text-lg font-semibold mb-2">Меню</h2>
+          <aside className="w-1/6 pt-16 bg-pink-200 shadow-md p-4 hidden md:block border-r font-serif font-bold bg-left bg-cover"
+                  style={{ backgroundImage: "url('/flowers-rozi-buket-tsveti-rozovie-knigi.jpeg')" }}
+                  >
+            <h2 className="text-lg font-montserrat mb-2">Katalog</h2>
             <ul className="space-y-2 text-sm text-gray-700">
-              <li><a href="#">Профіль організації</a></li>
-              <li><a href="#">Наші партнери</a></li>
-              <li><a href="#">Завантаження</a></li>
+              <li><a href="#" className="hover:underline">Lalki</a></li>
+              <li><a href="#" className="hover:underline">Maskotki</a></li>
+              <li><a href="#" className="hover:underline">Biżuteria</a></li>
+              <li><a href="#" className="hover:underline">Kwiaty</a></li>
             </ul>
           </aside>
 
         {/* Routing */}
-        <main className="flex-1 p-6 bg-green-500">
+        <main className="flex-1 p-6 pt-16" style={{ backgroundImage: "url('/knitting-4228338_1920.jpg')" }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/plans" element={<Plans />} />
+            <Route path="/productsMain" element={<Products />} />
             <Route path="/finished" element={<Finished />} />
             <Route path="/products/:id" element={<ProductDetails />} />
           </Routes>
         </main>
 
         {/* RIGHT SIDEBAR */}
-          <aside className="w-1/6 bg-gray-100 shadow-md p-4 hidden lg:block border-l">
+          <aside className="w-1/6 pt-16 bg-pink-200 shadow-md p-4 hidden lg:block border-l bg-bottom bg-cover"
+                 style={{ backgroundImage: "url('/flowers-rozi-buket-tsveti-rozovie-knigi.jpeg')" }}>
             <h2 className="text-lg font-semibold mb-2">Контакти</h2>
             <p className="text-sm text-gray-700">📧 fund@example.org</p>
             <p className="text-sm text-gray-700">📞 +38 (097) 123-45-67</p>
@@ -84,7 +63,7 @@ function App() {
 
       {/* FOOTER (опціонально) */}
       <footer className="bg-white p-4 text-center text-sm text-gray-400 border-t">
-        &copy; {new Date().getFullYear()} ФУНДАЦІЯ. Всі права захищено.
+        &copy; {new Date().getFullYear()} LS STUDIO. Всі права захищено.
       </footer>
     </div>
   )
