@@ -38,11 +38,14 @@ const Header = () => {
           <div className="max-w-7xl mx-auto rounded flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <img
-                src="/LORALEY.jpg"
+                src="/LogoLS1.png"
                 alt="logo"
                 className="w-20 h-20 rounded-full bg-white p-1"
               />
-              <h1 className="text-4xl text-pink-700 font-bold font-dancing tracking-wide">LS STUDIO</h1>
+              <div className="items-center space-x-3">
+                <h1 className="text-4xl text-pink-700 font-bold font-dancing tracking-wide">LS STUDIO</h1>
+                <p  className="text-pink-700 font-bold font-dancing tracking-wide">Love in little things</p>
+              </div>              
             </div>
             <nav className="outlined-text text-2xl font-bold space-x-4 hidden md:flex">
               <a href="/" className="hover:underline">Glówna</a>
@@ -88,11 +91,14 @@ const Header = () => {
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <img
-                src="/LORALEY.jpg"
+                src="/LogoLS1.png"
                 alt="logo"
                 className="w-10 h-10 rounded-full bg-white p-1"
               />
-              <h1 className="text-3xl text-pink-700 font-bold font-dancing tracking-wide">LS STUDIO</h1>
+              <div className="items-center space-x-3">
+                <h1 className="text-3xl text-pink-700 font-bold font-dancing tracking-wide">LS STUDIO</h1>
+                <p  className="text-pink-700 font-bold font-dancing tracking-wide">Love in little things</p>
+              </div>              
             </div> 
               <nav className="space-x-6 text-sm font-semibold uppercase hidden md:flex">
                 <a href="/" className="hover:underline">Glówna</a>
