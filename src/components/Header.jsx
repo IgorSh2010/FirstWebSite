@@ -60,6 +60,7 @@ const Header = () => {
                   🛒
                 </button>
               </div>
+
             {/* Mobile Menu Button */}
             <button
               className="md:hidden text-3xl focus:outline-none"
@@ -92,12 +93,12 @@ const Header = () => {
               />
               <h1 className="text-3xl text-pink-600 font-bold font-dancing tracking-wide">LS STUDIO</h1>
             </div> 
-              <nav className="space-x-6 text-sm font-semibold uppercase">
+              <nav className="space-x-6 text-sm font-semibold uppercase hidden md:flex">
                 <a href="/" className="hover:underline">Glówna</a>
                 <a href="/productsMain" className="hover:underline">Katalog wyrobów</a>
                 <a href="/about" className="hover:underline">O sklepie</a>
               </nav>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4 hidden md:flex">
                 <a href="#" className="text-xs">Zaloguj</a>
                 <span>|</span>
                 <a href="#" className="text-xs">Zarejestruj</a>
@@ -108,7 +109,26 @@ const Header = () => {
                   🛒
                 </button>
               </div>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden text-3xl focus:outline-none"
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                ☰
+              </button>
           </div>
+
+          {/* Mobile Menu Dropdown */}
+          {menuOpen && (
+            <div className="md:hidden px-4 pb-4 space-y-2 bg-gray-800 text-white">
+              <a href="/" className="block hover:underline">Glówna</a>
+              <a href="/productsMain" className="block hover:underline">Katalog</a>
+              <a href="/about" className="block hover:underline">O sklepie</a>
+              <a href="/logIn" className="block hover:underline">Zaloguj</a>
+              <a href="/signUp" className="block hover:underline">Zarejestruj</a>
+            </div>
+          )}
         </header>)
       } 
   </>
