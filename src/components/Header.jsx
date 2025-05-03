@@ -49,15 +49,7 @@ const Header = () => {
               <a href="/productsMain" className="hover:underline">Katalog wyrobów</a>
               <a href="/about" className="hover:underline">O sklepie</a>
             </nav>
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-3xl focus:outline-none"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              ☰
-            </button>
-
-            <div className="flex items-center space-x-4">
+            <div className="flex md:flex items-center space-x-4">
                 <a href="#" className="text-bold">Zaloguj</a>
                 <span>|</span>
                 <a href="#" className="text-bold">Zarejestruj</a>
@@ -68,6 +60,13 @@ const Header = () => {
                   🛒
                 </button>
               </div>
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden text-3xl focus:outline-none"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              ☰
+            </button>
           </div>
 
           {/* Mobile Menu Dropdown */}
@@ -76,6 +75,8 @@ const Header = () => {
               <a href="/" className="block hover:underline">Glówna</a>
               <a href="/productsMain" className="block hover:underline">Katalog</a>
               <a href="/about" className="block hover:underline">O sklepie</a>
+              <a href="#" className="text-bold">Zaloguj</a>
+              <a href="#" className="text-bold">Zarejestruj</a>
             </div>
           )}
         </header>
