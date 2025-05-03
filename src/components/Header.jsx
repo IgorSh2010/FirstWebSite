@@ -49,7 +49,7 @@ const Header = () => {
               <a href="/productsMain" className="hover:underline">Katalog wyrobów</a>
               <a href="/about" className="hover:underline">O sklepie</a>
             </nav>
-            <div className="flex md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
                 <a href="#" className="text-bold">Zaloguj</a>
                 <span>|</span>
                 <a href="#" className="text-bold">Zarejestruj</a>
@@ -75,8 +75,8 @@ const Header = () => {
               <a href="/" className="block hover:underline">Glówna</a>
               <a href="/productsMain" className="block hover:underline">Katalog</a>
               <a href="/about" className="block hover:underline">O sklepie</a>
-              <a href="#" className="text-bold">Zaloguj</a>
-              <a href="#" className="text-bold">Zarejestruj</a>
+              <a href="/logIn" className="block hover:underline">Zaloguj</a>
+              <a href="/signUp" className="block hover:underline">Zarejestruj</a>
             </div>
           )}
         </header>
