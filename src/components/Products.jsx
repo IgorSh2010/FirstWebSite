@@ -27,14 +27,14 @@ export default function Products() {
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {products.map((product) => (
         <Link to={`/productsMain/${product._id}`} key={product._id}>
-          <div key={product._id} className="border p-4 rounded shadow hover:shadow-md transition">
+          <div key={product._id} className="bg-red-200 border p-4 rounded shadow hover:shadow-md transition">
             {product.imageUrl && (
               <img src={product.imageUrl} alt={product.title} className="w-full h-48 object-cover mb-2 rounded" />
             )}
-            <h3 className="text-lg font-semibold text-blue-600">{product.title}</h3>
+            <h3 className="text-lg font-semibold text-pink-800">{product.title}</h3>
             <p className="text-sm text-gray-600">{product.description}</p>
-            <p className="font-bold mt-2">{product.price} грн</p>
-            <p className="text-xs mt-1">{product.available ? '✅ В наявності' : '❌ Немає'}</p>
+            <p className="font-bold mt-2">💰 Cena: {product.price} zł.</p>
+            <p className="text-xs mt-1">{product.available ? '✅ Dostępny' : '❌ Chwilowo nie dostępny (na zamówienie)'}</p>
           </div>      
         </Link>))}
     </div>

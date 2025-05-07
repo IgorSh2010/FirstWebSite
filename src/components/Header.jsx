@@ -50,7 +50,7 @@ const Header = () => {
             <nav className="outlined-text text-2xl font-bold space-x-4 hidden md:flex">
               <a href="/" className="hover:underline">Glówna</a>
               <a href="/productsMain" className="hover:underline">Katalog wyrobów</a>
-              <a href="/about" className="hover:underline">O sklepie</a>
+              <a href="/about" className="hover:underline">O nas</a>
             </nav>
             <div className="hidden md:flex items-center space-x-4">
                 <a href="#" className="text-bold">Zaloguj</a>
@@ -78,7 +78,7 @@ const Header = () => {
             <div className="md:hidden px-4 pb-4 space-y-2 bg-gray-800 text-white">
               <a href="/" className="block hover:underline">Glówna</a>
               <a href="/productsMain" className="block hover:underline">Katalog</a>
-              <a href="/about" className="block hover:underline">O sklepie</a>
+              <a href="/about" className="block hover:underline">O nas</a>
               <p>---------------------------</p>
               <a href="/logIn" className="block hover:underline">Zaloguj</a>
               <a href="/signUp" className="block hover:underline">Zarejestruj</a>
@@ -103,7 +103,7 @@ const Header = () => {
               <nav className="space-x-6 text-sm font-semibold uppercase hidden md:flex">
                 <a href="/" className="hover:underline">Glówna</a>
                 <a href="/productsMain" className="hover:underline">Katalog wyrobów</a>
-                <a href="/about" className="hover:underline">O sklepie</a>
+                <a href="/about" className="hover:underline">O nas</a>
               </nav>
               <div className="flex items-center space-x-4 hidden md:flex">
                 <a href="#" className="text-xs">Zaloguj</a>

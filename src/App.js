@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Home from './Pages/Home'
 import Products from './Pages/ProductsMain'
 import Finished from './Pages/Finished'
+import AboutUs from './Pages/About'
 import ProductDetails from './Pages/ProductDetails'
 
 const Layout = () => {
@@ -36,6 +37,7 @@ const Layout = () => {
             <li><a href="#" className="hover:underline">Breloki</a></li>
             <li><a href="#" className="hover:underline">Biżuteria</a></li>
             <li><a href="#" className="hover:underline">Kwiaty</a></li>
+            <li><a href="#" className="hover:underline">Zwierzęta i ptaki</a></li>
           </ul>
         </aside>
       )}
@@ -47,10 +49,11 @@ const Layout = () => {
           <Route path="/productsMain" element={<Products />} />
           <Route path="/finished" element={<Finished />} />
           <Route path="/productsMain/:id" element={<ProductDetails />} />
+          <Route path="/about" element={<AboutUs />} />
         </Routes>
       </main>
 
-       {/* RIGHT SIDEBAR */}
+      {/* RIGHT SIDEBAR 
       {!isHome && (     
         <aside className="w-1/6 pt-16 bg-pink-200 shadow-md p-4 hidden lg:block border-l bg-bottom bg-cover"
                 style={{ backgroundImage: "url('/flowers-rozi-buket-tsveti-rozovie-knigi.jpeg')" }}>
@@ -66,7 +69,7 @@ const Layout = () => {
             </div>
           </div>
         </aside>
-      )}
+      )}*/}
       </div> 
     </div>
   )}
@@ -78,7 +81,7 @@ function App() {
 
         {/* FOOTER (опціонально) */}
         <footer className="bg-white p-4 text-center text-sm text-gray-400 border-t">
-          &copy; {new Date().getFullYear()} LS STUDIO. Всі права захищено.
+          &copy; {new Date().getFullYear()} LS STUDIO. Wszelkie prawa zastrzeżone..
         </footer>
       </Router>
   )

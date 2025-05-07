@@ -17,10 +17,10 @@ export default function ProductDetails() {
     }`, { id }).then(setProduct).catch(console.error)
   }, [id])
 
-  if (!product) return <div className="p-6">Завантаження...</div>
+  if (!product) return <div className="p-6">Loading...</div>
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
+    <div className="bg-white/5 backdrop-blur-md p-6 max-w-3xl mx-auto">
       {product.imageUrl && (
         <a href={product.imageUrl} target="_blank" rel="noreferrer">
           <img
@@ -30,12 +30,12 @@ export default function ProductDetails() {
           />
         </a>
       )}
-      <h2 className="text-3xl font-bold text-blue-700">{product.title}</h2>
+      <h2 className="text-3xl font-extrabold text-pink-800">{product.title}</h2>
       <div className="flex items-center gap-4 mt-4">
-        <p className="text-xl font-semibold">💰{product.price} грн</p>
-        <p className="text-sm">{product.available ? '✅ В наявності' : '❌ Тимчасово відсутній'}</p>
+        <p className="text-xl font-semibold">💰 Cena: {product.price} zł.</p>
+        <p className="text-sm">{product.available ? '✅ Dostępny' : '❌ Chwilowo nie dostępny (na zamówienie)'}</p>
       </div>
-      <p className="text-gray-700 mt-2">{product.description}</p>
+      <p className="font-semibold mt-2">📌 Opis: {product.description}</p>
     </div>
   )
 }
