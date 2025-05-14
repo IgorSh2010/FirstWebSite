@@ -1,11 +1,13 @@
+import Breadcrumbs from '../components/Breadcrumbs'
 function About() {
   return (
-    <section className="p-4 max-w-3xl mx-auto backdrop-blur-sm bg-pink-100/30 rounded-md">
+    <section className="p-4 max-w-3xl mx-auto backdrop-blur-sm bg-pink-300/60 rounded-md">
+      <Breadcrumbs />
       <h1 className="text-2xl font-semibold mb-4">
         Witajcie w <strong>LS Studio</strong>! ✨
       </h1>
 
-      <div className="text-gray-800 space-y-3">
+      <div className="space-y-3">
         <p>
           Mam na imię <strong>Larysa Shepetko</strong> i z ogromną radością witam Was na stronie mojej pracowni rękodzieła.
         </p>
@@ -36,7 +38,7 @@ function About() {
         {/* Social Media Links */}
         <div className="mt-6 flex items-center space-x-4">
           <a
-            href="https://www.facebook.com/larysa.shepetko" // 🔁 заміни на реальне посилання
+            href="https://www.facebook.com/larysa.shepetko"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 hover:underline flex items-center space-x-1"
@@ -46,7 +48,7 @@ function About() {
           </a>
 
           <a
-            href="https://www.instagram.com/shepetko.larisa" // 🔁 заміни на реальне посилання
+            href="https://www.instagram.com/shepetko.larisa"
             target="_blank"
             rel="noopener noreferrer"
             className="text-pink-600 hover:underline flex items-center space-x-1"

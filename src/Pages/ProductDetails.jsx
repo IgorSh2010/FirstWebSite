@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { client } from '../sanityClient'
+import Breadcrumbs from '../components/Breadcrumbs'
 
 export default function ProductDetails() {
   const { id } = useParams()
@@ -21,6 +22,7 @@ export default function ProductDetails() {
 
   return (
     <div className="bg-white/5 backdrop-blur-md p-6 max-w-3xl mx-auto">
+      <Breadcrumbs />
       {product.imageUrl && (
         <a href={product.imageUrl} target="_blank" rel="noreferrer">
           <img

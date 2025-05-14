@@ -3,13 +3,16 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { useNavigate } from 'react-router-dom';
 
-const Carousel = ({ products, title = '', showButton = false, onDetailsClick }) => {
+const Carousel = ({ products, title = '', showButton = true }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="mb-6 w-full">
-      {title && <h2 className="text-xl font-extrabold mb-4 text-green-600">{title}</h2>}
+      {title && <h2 className="text-3xl font-extrabold mb-4 text-green-800">{title}</h2>}
       
-      <div className="w-full max-w-screen-xl mx-auto overflow-hidden">
+      <div className="w-full max-w-screen-xl mx-auto overflow-hidden relative">
       {products?.length > 0 && (  
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
@@ -25,24 +28,27 @@ const Carousel = ({ products, title = '', showButton = false, onDetailsClick }) 
             1024: { slidesPerView: 3 },
             1280: { slidesPerView: 4 },
         }}
+        className="pb-20"
       >
         {products.map((product) => (
           <SwiperSlide key={product._id}>
-            <div className="bg-white/70 backdrop-blur-md p-3 rounded-md shadow hover:shadow-md transition text-sm max-w-xs w-full mx-auto">
-              <img
-                src={product.imageUrl}
-                alt={product.title}
-                className="w-full h-32 object-cover rounded mb-2"
-              />
+            <div className="relative z-0 bg-white/70 backdrop-blur-md p-3 rounded-md shadow hover:shadow-md transition text-sm max-w-xs w-full mx-auto">
+              <div className="overflow-hidden rounded">
+                <img
+                  src={product.imageUrl}
+                  alt={product.title}
+                  className="w-full h-32 object-contain rounded mb-2 mx-auto transition-transform duration-300 transform hover:scale-150"
+                />
+              </div>
               <h3 className="text-sm font-semibold text-pink-700 mb-1">{product.title}</h3>
               <p className="text-xs text-gray-600 mb-1 line-clamp-2">{product.description}</p>
               <p className="text-sm font-bold text-pink-600">{product.price} zł.</p>
               {showButton && (
                 <button
-                  onClick={() => onDetailsClick?.(product)}
-                  className="mt-2 px-3 py-1 bg-pink-500 text-white rounded text-xs hover:bg-pink-600"
+                  onClick={() => navigate(`/productsMain/${product._id}`)}
+                  className="mt-2 px-3 py-1 bg-pink-500 text-white rounded text-xs hover:bg-pink-600 flex flex-col justify-between"
                 >
-                  Szcególnie
+                  Szczegóły
                 </button>
               )}
             </div>

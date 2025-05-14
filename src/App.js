@@ -81,7 +81,7 @@ function App() {
 
         {/* FOOTER (опціонально) */}
         <footer className="bg-white p-4 text-center text-sm text-gray-400 border-t">
-          &copy; {new Date().getFullYear()} LS STUDIO. Wszelkie prawa zastrzeżone..
+          &copy; {new Date().getFullYear()} LS STUDIO. Wszelkie prawa zastrzeżone.
         </footer>
       </Router>
   )
