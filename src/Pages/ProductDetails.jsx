@@ -21,8 +21,9 @@ export default function ProductDetails() {
   if (!product) return <div className="p-6">Loading...</div>
 
   return (
-    <div className="bg-white/5 backdrop-blur-md p-6 max-w-3xl mx-auto">
-      <Breadcrumbs />
+  <>
+    <div className='ml-60'><Breadcrumbs /></div>
+    <div className="ml-60 bg-white/5 backdrop-blur-md p-6 max-w-3xl mx-auto">
       {product.imageUrl && (
         <a href={product.imageUrl} target="_blank" rel="noreferrer">
           <img
@@ -39,5 +40,6 @@ export default function ProductDetails() {
       </div>
       <p className="font-semibold mt-2">📌 Opis: {product.description}</p>
     </div>
+  </>
   )
 }

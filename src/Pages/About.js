@@ -1,8 +1,9 @@
 import Breadcrumbs from '../components/Breadcrumbs'
 function About() {
   return (
-    <section className="p-4 max-w-3xl mx-auto backdrop-blur-sm bg-pink-300/60 rounded-md">
-      <Breadcrumbs />
+    <>
+    <div className='ml-60'><Breadcrumbs /></div>
+    <section className="ml-60 p-4 max-w-3xl mx-auto backdrop-blur-sm bg-pink-300/60 rounded-md">      
       <h1 className="text-2xl font-semibold mb-4">
         Witajcie w <strong>LS Studio</strong>! ✨
       </h1>
@@ -59,6 +60,7 @@ function About() {
         </div>
       </div>
     </section>
+  </>  
   );
 }
 

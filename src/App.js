@@ -26,7 +26,7 @@ const Layout = () => {
 
       {/* LEFT SIDEBAR */}
       {!isHome && (        
-        <aside className="w-1/6 pt-16 bg-pink-200 shadow-md p-4 hidden md:block border-r font-serif font-bold bg-left bg-cover"
+        <aside className="fixed top-0 left-0 h-full z-40 w-1/6 pt-16 shadow-md p-4 hidden md:block border-r font-serif font-bold bg-left bg-cover"
                 style={{ backgroundImage: "url('/flowers-rozi-buket-tsveti-rozovie-knigi.jpeg')" }}
                 >
           <h2 className="text-lg font-montserrat mb-2">Katalog</h2>
@@ -43,7 +43,7 @@ const Layout = () => {
       )}
 
       {/* Routing */}
-      <main className="flex-1 p-6 pt-16" style={{ backgroundImage: "url('/knitting-4228338_1920.jpg')" }}>
+      <main className="flex-1 p-6 pt-16 bg-fixed" style={{ backgroundImage: "url('/vyazanie-kryuchkom-8.jpg')" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productsMain" element={<Products />} />
