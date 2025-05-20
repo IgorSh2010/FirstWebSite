@@ -59,7 +59,7 @@ const Header = () => {
               <div className="font-medium">
                 Kontakty do zamówień
               </div>
-              <div  className="flex md:flex backdrop-blur-sm bg-pink-200/20 items-center rounded-md">
+              <div  className="hidden flex md:flex backdrop-blur-sm bg-pink-200/20 items-center rounded-md">
                 <a
                   href="https://www.facebook.com/larysa.shepetko"
                   target="_blank"
@@ -212,7 +212,7 @@ const Header = () => {
                   </a>
                 </div>  
               </div>
-              <div className="flex items-center space-x-4 md:flex">
+              <div className="hidden items-center space-x-4 md:flex">
                 <a href="#" className="text-xs">Zaloguj</a>
                 <span>|</span>
                 <a href="#" className="text-xs">Zarejestruj</a>
