@@ -12,7 +12,7 @@ const Carousel = ({ products, title = '', showButton = true }) => {
     <div className="mb-6 w-full">
       {title && <h2 className="text-3xl font-extrabold mb-4 text-green-800">{title}</h2>}
       
-      <div className="w-full max-w-screen-xl mx-auto overflow-hidden relative md:flex">
+      <div className="w-full max-w-screen-xl mx-auto overflow-hidden relative px-2">
       {products?.length > 0 && (  
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
@@ -32,7 +32,7 @@ const Carousel = ({ products, title = '', showButton = true }) => {
       >
         {products.map((product) => (
           <SwiperSlide key={product._id}>
-            <div className="relative z-0 bg-white/70 backdrop-blur-md p-3 rounded-md shadow hover:shadow-md transition text-sm max-w-xs w-full mx-auto">
+            <div className="relative z-0 bg-white/70 backdrop-blur-md p-3 rounded-md shadow hover:shadow-md transition text-sm sm:max-w-xs w-full mx-auto">
               <div className="overflow-hidden rounded">
                 <img
                   src={product.imageUrl}
@@ -46,7 +46,7 @@ const Carousel = ({ products, title = '', showButton = true }) => {
               {showButton && (
                 <button
                   onClick={() => navigate(`/productsMain/${product._id}`)}
-                  className="mt-2 px-3 py-1 bg-pink-500 text-white rounded text-xs hover:bg-pink-600 flex flex-col justify-between"
+                  className="mt-2 w-full text-center px-3 py-1 bg-pink-500 text-white rounded text-xs hover:bg-pink-600 flex flex-col justify-between"
                 >
                   Szczegóły
                 </button>
