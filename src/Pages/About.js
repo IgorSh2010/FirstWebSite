@@ -2,8 +2,8 @@ import Breadcrumbs from '../components/Breadcrumbs'
 function About() {
   return (
     <>
-    <div className='ml-60'><Breadcrumbs /></div>
-    <section className="ml-60 p-4 max-w-3xl mx-auto backdrop-blur-sm bg-pink-300/60 rounded-md">      
+    <div className='md:ml-60 ml-1 p-2 w-full'><Breadcrumbs /></div>
+    <section className="md:ml-60 ml-1 p-4 max-w-3xl mx-auto backdrop-blur-sm bg-pink-300/60 rounded-md">      
       <h1 className="text-2xl font-semibold mb-4">
         Witajcie w <strong>LS Studio</strong>! ✨
       </h1>
@@ -25,39 +25,6 @@ function About() {
         <p><strong>Larysa Shepetko</strong></p>
         <p><em>LS Studio</em></p>
 
-        {/* WhatsApp Button */}
-        <button
-          onClick={() => window.open('https://wa.me/48501577919', '_blank')}
-          className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-        >
-          Napisz na WhatsApp!!!
-        </button>
-
-        {/* Contact Email */}
-        <p className="text-sm text-gray-700 mt-4">📧 likashepetko@gmail.com</p>
-
-        {/* Social Media Links */}
-        <div className="mt-6 flex items-center space-x-4">
-          <a
-            href="https://www.facebook.com/larysa.shepetko"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:underline flex items-center space-x-1"
-          >
-            <span>🌐</span>
-            <span>Facebook</span>
-          </a>
-
-          <a
-            href="https://www.instagram.com/shepetko.larisa"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-pink-600 hover:underline flex items-center space-x-1"
-          >
-            <span>📷</span>
-            <span>Instagram</span>
-          </a>
-        </div>
       </div>
     </section>
   </>  

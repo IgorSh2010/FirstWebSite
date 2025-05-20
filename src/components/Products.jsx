@@ -24,7 +24,7 @@ export default function Products() {
   }, [])
 
   return (
-    <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {products.map((product) => (
         <Link to={`/productsMain/${product._id}`} key={product._id}>
           <div key={product._id} className="bg-red-200 border p-4 rounded shadow hover:shadow-md transition">
