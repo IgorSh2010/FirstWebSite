@@ -65,8 +65,8 @@ const Header = () => {
         {/* Контакти */}
         <div className="text-center md:text-right">
           <div className="flex space-x-4 md:items-end md:text-right">
-            <span className="font-medium text-sm mb-1 md:mb-2">Kontakty do zamówień</span>
-            <div className="flex flex-row flex-wrap md:flex-row gap-2 items-center md:justify-end">
+            
+            <div className="flex flex-row flex-wrap md:flex-row gap-2 items-end md:justify-end">
                 <a
                 href="https://www.facebook.com/larysa.shepetko"
                 target="_blank"
