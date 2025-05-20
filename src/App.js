@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
-import Header from './components/Header'
+import Header from './components/HeaderNew'
 import Home from './Pages/Home'
 import Products from './Pages/ProductsMain'
 import Finished from './Pages/Finished'

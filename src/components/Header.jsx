@@ -36,7 +36,7 @@ const Header = () => {
                 style={isHome && !scrolled
                         ? { backgroundImage: "url('/head-vyazanie-kryuchkom-22.jpg')" }
                         : { backgroundColor: "#1f2937" }}>
-          <div className="max-w-7xl mx-auto rounded flex items-center justify-between">
+          <div className="max-w-7xl mx-auto rounded flex items-center justify-between ">
             <div className="flex items-center space-x-3">
               <img
                 src={logo}
