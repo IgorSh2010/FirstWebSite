@@ -12,7 +12,7 @@ const Carousel = ({ products, title = '', showButton = true }) => {
     <div className="mb-6 w-full">
       {title && <h2 className="text-3xl font-extrabold mb-4 text-green-800">{title}</h2>}
       
-      <div className="w-full max-w-screen-xl mx-auto overflow-hidden relative px-2">
+      <div className="w-full mx-auto overflow-hidden relative px-2">
       {products?.length > 0 && (  
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
