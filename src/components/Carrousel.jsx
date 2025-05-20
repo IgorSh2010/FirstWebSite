@@ -18,6 +18,7 @@ const Carousel = ({ products, title = '', showButton = true }) => {
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={16}
         slidesPerView={1}
+        style={{ width: '100%' }}
         navigation
         pagination={{ clickable: true }}
         autoplay={{ delay: 4000 }}
