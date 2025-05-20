@@ -22,7 +22,7 @@ const Header = () => {
   const headerClass = classNames(
     "shadow-md transition-all duration-800 ease-in-out",
       {
-        "text-green-900 px-6 py-6 bg-cover bg-center": isHome && !scrolled,
+        "text-green-900 px-6 py-6 bg-cover bg-center w-full": isHome && !scrolled,
         "fixed top-0 w-full z-50 bg-gray-900 text-white shadow-md": scrolled || !isHome,
         //"fixed top-0 w-full z-50 text-white shadow-md": scrolled,
       }
