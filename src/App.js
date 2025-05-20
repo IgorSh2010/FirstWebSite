@@ -43,7 +43,7 @@ const Layout = () => {
       )}
 
       {/* Routing */}
-      <main className="flex-1 p-6 pt-16 bg-fixed" style={{ backgroundImage: "url('/vyazanie-kryuchkom-8.jpg')" }}>
+      <main className="flex-1 p-6 pt-16 bg-fixed sm:max-w-xs w-full" style={{ backgroundImage: "url('/vyazanie-kryuchkom-8.jpg')" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productsMain" element={<Products />} />
