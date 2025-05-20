@@ -9,7 +9,7 @@ const Carousel = ({ products, title = '', showButton = true }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="mb-6 w-full">
+    <div className="mb-6 w-full max-w-full lg:max-w-screen-lg mx-auto">
       {title && <h2 className="text-3xl font-extrabold mb-4 text-green-800">{title}</h2>}
       
       <div className="w-full mx-auto overflow-hidden relative px-2">
