@@ -212,7 +212,7 @@ const Header = () => {
                   </a>
                 </div>  
               </div>
-              <div className="flex items-center space-x-4 hidden md:flex">
+              <div className="flex items-center space-x-4 md:flex">
                 <a href="#" className="text-xs">Zaloguj</a>
                 <span>|</span>
                 <a href="#" className="text-xs">Zarejestruj</a>
