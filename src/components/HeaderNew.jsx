@@ -1,6 +1,8 @@
-import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 import classNames from "classnames";
+import { auth } from "../firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const Header = () => {
   const location = useLocation();
@@ -8,6 +10,23 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const isHome = location.pathname === "/";
   const logo = "/LogoLS1.png";
+  const [user, setUser] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    setDropdownOpen(false);
+    navigate("/");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +34,19 @@ const Header = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const headerClass = classNames(
@@ -57,6 +89,12 @@ const Header = () => {
           <a href="/productsMain" className="hover:underline">
             Katalog wyrobów
           </a>
+          {user ? (
+            <a href="/account" className="hover:underline">
+              Konto
+            </a>
+          ) : ("")
+          }  
           <a href="/about" className="hover:underline">
             O nas
           </a>
@@ -99,17 +137,51 @@ const Header = () => {
         </div>
 
         {/* Додаткові кнопки */}
-        <div className="hidden md:flex items-center space-x-4">
-          <a href="#" className="text-xs">
-            Zaloguj
-          </a>
-          <span>|</span>
-          <a href="#" className="text-xs">
-            Zarejestruj
-          </a>
-          <button className="bg-pink-400 p-2 rounded-full">🔍</button>
-          <button className="bg-pink-500 p-2 rounded-full">🛒</button>
-        </div>
+        {user ? (
+          <div ref={dropdownRef} className="relative hidden md:flex items-center space-x-4">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="flex items-center space-x-2 bg-pink-600 px-3 py-1 rounded hover:bg-pink-700"
+            >
+              <span>{user.email.split("@")[0]}</span>
+              <span>▼</span>
+            </button>
+
+            {dropdownOpen && (
+              <div className="absolute right-0 top-full mt-1 bg-white text-gray-700 shadow-lg rounded-md w-56 z-50 border border-pink-200">
+                <div className="px-4 py-3 border-b border-pink-100">
+                  <p className="font-bold text-pink-700">{user.email}</p>
+                </div>
+                <ul className="text-sm">
+                  <li>
+                    <a href="/account" className="block px-4 py-2 hover:bg-pink-100">👤 Мій кабінет</a>
+                  </li>
+                  <li>
+                    <a href="/favorites" className="block px-4 py-2 hover:bg-pink-100">❤️ Улюблене</a>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 hover:bg-pink-100"
+                    >
+                      🚪 Вийти
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="hidden md:flex items-center space-x-4">
+            <a href="/login" className="font-semibold">
+              Zaloguj
+            </a>
+            <span>|</span>
+            <a href="/Register" className="font-semibold">
+              Zarejestruj
+            </a>
+          </div>
+        )}
 
         {/* Кнопка мобільного меню */}
         <button
@@ -133,12 +205,24 @@ const Header = () => {
             O nas
           </a>
           <hr className="my-2 border-gray-600" />
-          <a href="/logIn" className="block hover:underline">
-            Zaloguj
-          </a>
-          <a href="/signUp" className="block hover:underline">
-            Zarejestruj
-          </a>
+          {user ? (
+            <div className="text-white space-y-2">
+              <p className="font-bold">{user.email}</p>
+              <a href="/account" className="block hover:underline">👤 Мій кабінет</a>
+              <a href="/favorites" className="block hover:underline">❤️ Улюблене</a>
+              <button
+                onClick={handleLogout}
+                className="w-full text-left hover:underline"
+              >
+                🚪 Вийти
+              </button>
+            </div>
+          ) : (
+            <>
+              <a href="/login" className="block hover:underline">Zaloguj</a>
+              <a href="/register" className="block hover:underline">Zarejestruj</a>
+            </>
+          )}
         </div>
       )}
     </header>

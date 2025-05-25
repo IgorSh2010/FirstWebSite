@@ -6,6 +6,9 @@ import Products from './Pages/ProductsMain'
 import Finished from './Pages/Finished'
 import AboutUs from './Pages/About'
 import ProductDetails from './Pages/ProductDetails'
+import Login from './Pages/Login'
+import Register from './Pages/Register'
+import Account from './Pages/Account';
 
 const Layout = () => {
   return (
@@ -21,30 +24,6 @@ const Layout = () => {
       {/*CONTENT SECTION*/}
       <div className="flex flex-1">
 
-      {/* LEFT SIDEBAR */}
-      {/*{!isHome && (        
-        <aside className="fixed top-0 left-0 h-full z-auto w-1/6 pt-24 shadow-md p-4 hidden sm:hidden md:block border-r font-serif font-bold bg-left bg-cover"
-                style={{ backgroundImage: "url('/flowers-rozi-buket-tsveti-rozovie-knigi.jpeg')" }}
-                >
-          <h2 className="text-lg font-montserrat mb-2">Katalog</h2>
-          <ul>
-            <li><button onClick={() => setSelectedCategory(null)}>Wszystkie</button></li>
-            <li><button onClick={() => setSelectedCategory("lalki")}>Lalki</button></li>
-            <li><button onClick={() => setSelectedCategory("maskotki")}>Maskotki</button></li>
-           
-          </ul>
-          <ul className="space-y-2 text-sm text-gray-700">
-            <li><a href="#" className="hover:underline">Lalki</a></li>
-            <li><a href="#" className="hover:underline">Bohaterowie bajkowe</a></li>
-            <li><a href="#" className="hover:underline">Maskotki</a></li>
-            <li><a href="#" className="hover:underline">Breloki</a></li>
-            <li><a href="#" className="hover:underline">Biżuteria</a></li>
-            <li><a href="#" className="hover:underline">Kwiaty</a></li>
-            <li><a href="#" className="hover:underline">Zwierzęta i ptaki</a></li>
-          </ul>
-        </aside>
-      )}*/}
-
       {/* Routing */}
       <main className="md:pt-16 flex-1 p-4 pt-32 bg-fixed w-full" style={{ backgroundImage: "url('/vyazanie-kryuchkom-8.jpg')" }}>
         <Routes>
@@ -53,6 +32,9 @@ const Layout = () => {
           <Route path="/finished" element={<Finished />} />
           <Route path="/productsMain/:id" element={<ProductDetails />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
       </main>
 
