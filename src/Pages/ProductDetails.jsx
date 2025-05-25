@@ -19,10 +19,10 @@ export default function ProductDetails() {
   }, [id])
 
   if (!product) return <div className="p-6">Loading...</div>
-
+  
   return (
   <>
-    <div className='md:ml-60 ml-1'><Breadcrumbs /></div>
+    <div className='ml-1'><Breadcrumbs /></div>
     <div className="md:ml-60 ml-1 bg-white/5 backdrop-blur-md p-4 max-w-3xl mx-auto">
       {product.imageUrl && (
         <a href={product.imageUrl} target="_blank" rel="noreferrer">

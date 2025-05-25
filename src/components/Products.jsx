@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { client } from '../sanityClient'
 import { Link } from 'react-router-dom'
+import CategoryFilter from '../components/CategoryFilter';
 
-export default function Products() {
-  const [products, setProducts] = useState([])
+  const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     client
@@ -23,9 +25,27 @@ export default function Products() {
       .catch(console.error)
   }, [])
 
+  const categories = [...new Set(products.map((p) => p.category))];
+
+  const filteredProducts = selectedCategory
+    ? products.filter((p) => p.category === selectedCategory)
+    : products;
+
   return (
+    <div> 
+      <div className="mb-4">
+        <div className="flex flex-wrap gap-2 mt-2">
+          <CategoryFilter
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelect={setSelectedCategory}
+          products={products}
+        />
+        </div>
+      </div>
+
     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <Link to={`/productsMain/${product._id}`} key={product._id}>
           <div key={product._id} className="bg-red-200 border p-4 rounded shadow hover:shadow-md transition">
             {product.imageUrl && (
@@ -38,5 +58,8 @@ export default function Products() {
           </div>      
         </Link>))}
     </div>
+  </div>  
   )
 }
+
+export default Products;

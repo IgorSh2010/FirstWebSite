@@ -21,7 +21,16 @@ code {
 }
 
 .swiper-pagination {
-  bottom: 0 !important;   /* зміщує вниз */
+  bottom: 0 !important; /* зміщує вниз */
   margin-top: 12px;
   z-index: 20;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
