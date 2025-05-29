@@ -2,8 +2,8 @@ import Breadcrumbs from '../components/Breadcrumbs'
 function About() {
   return (
     <>
-    <div className='md:ml-60 ml-1 p-2 w-full'><Breadcrumbs /></div>
-    <section className="md:ml-60 ml-1 p-4 max-w-3xl mx-auto backdrop-blur-sm bg-pink-300/60 rounded-md">      
+    <div className='ml-1 p-2 w-full'><Breadcrumbs /></div>
+    <section className="ml-1 p-4 max-w-3xl mx-auto backdrop-blur-sm bg-pink-300/60 rounded-md">      
       <h1 className="text-2xl font-semibold mb-4">
         Witajcie w <strong>LS Studio</strong>! ✨
       </h1>
@@ -24,6 +24,8 @@ function About() {
         <p>Z serdecznymi pozdrowieniami,</p>
         <p><strong>Larysa Shepetko</strong></p>
         <p><em>LS Studio</em></p>
+
+        <a href="/regulamin" className="block hover:underline">Regulamin i Polityki prywatności</a>
 
       </div>
     </section>

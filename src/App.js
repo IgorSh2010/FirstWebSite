@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/HeaderNew'
 import Home from './Pages/Home'
 import Products from './Pages/ProductsMain'
-import Finished from './Pages/Finished'
 import AboutUs from './Pages/About'
 import ProductDetails from './Pages/ProductDetails'
 import Login from './Pages/Login'
 import Register from './Pages/Register'
-import Account from './Pages/Account';
+import Account from './Pages/Account'
+import Regulamin from './Pages/RegulaminPolityki'
 
 const Layout = () => {
   return (
@@ -29,12 +29,12 @@ const Layout = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productsMain" element={<Products />} />
-          <Route path="/finished" element={<Finished />} />
           <Route path="/productsMain/:id" element={<ProductDetails />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/regulamin" element={<Regulamin />} />
         </Routes>
       </main>
 

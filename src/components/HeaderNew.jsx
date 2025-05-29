@@ -14,6 +14,7 @@ const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const mobileMenuRef = useRef(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -48,6 +49,20 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+  const handleOutsideClick = (e) => {
+    if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) {
+      setMenuOpen(false);
+    }
+  };
+  if (menuOpen) {
+    document.addEventListener("mousedown", handleOutsideClick);
+  } else {
+    document.removeEventListener("mousedown", handleOutsideClick);
+  }
+  return () => document.removeEventListener("mousedown", handleOutsideClick);
+}, [menuOpen]);
 
   const headerClass = classNames(
     "shadow-md transition-all duration-800 ease-in-out z-50",
@@ -194,7 +209,7 @@ const Header = () => {
 
       {/* Мобільне меню */}
       {menuOpen && (
-        <div className="md:hidden px-4 pb-4 space-y-2 bg-gray-800 text-white text-center mt-2 rounded-md">
+        <div ref={mobileMenuRef} className="md:hidden px-4 pb-4 space-y-2 bg-gray-800 text-white text-center mt-2 rounded-md">
           <a href="/" className="block hover:underline">
             Glówna
           </a>

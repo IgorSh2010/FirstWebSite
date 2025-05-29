@@ -2,37 +2,40 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import Modal from "../components/Modal";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [modalMessage, setModalMessage] = useState(null);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     if (password !== confirm) {
-      alert("Паролі не співпадають!");
+      setModalMessage("Hasła nie są podobne! Spróbuj jeszcze raz.");
       return;
     }
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      alert("Реєстрація успішна!");
+      setModalMessage("Rejestracja powiodła się!");
       navigate("/account");
     } catch (error) {
-      alert("Помилка: " + error.message);
+      setModalMessage("Błąd: " + error.message);
     }
   };
 
   return (
+    <>
     <div className="max-w-md mx-auto p-6 bg-white shadow rounded mt-16">
-      <h2 className="text-2xl font-bold mb-4">Реєстрація</h2>
+      <h2 className="text-2xl font-bold mb-4">Rejestracja nowego konta</h2>
       <form onSubmit={handleRegister} className="space-y-4">
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Twój adres e-mail"
           className="w-full border p-2"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -40,7 +43,7 @@ const Register = () => {
         />
         <input
           type="password"
-          placeholder="Пароль"
+          placeholder="Wprowadź hasło"
           className="w-full border p-2"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -48,17 +51,27 @@ const Register = () => {
         />
         <input
           type="password"
-          placeholder="Підтвердження пароля"
+          placeholder="Hasło (powtórzenie)"
           className="w-full border p-2"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
           required
         />
         <button className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 w-full">
-          Зареєструватися
+           Zarejestruj się
         </button>
       </form>
     </div>
+
+    {modalMessage && (
+      <Modal message={modalMessage} onClose={() => {
+        setModalMessage(null);
+        if (modalMessage === "Rejestracja powiodła się!") {
+          navigate("/account");
+        }
+      }} />
+    )}
+  </>
   );
 };
 
