@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
@@ -21,7 +22,8 @@ const Register = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      setModalMessage("Rejestracja powiodła się!");
+      await sendEmailVerification(auth.currentUser);
+      setModalMessage("Rejestracja powiodła się! Sprawdź skrzynkę e-mail, aby potwierdzić adres.");
       navigate("/account");
     } catch (error) {
       setModalMessage("Błąd: " + error.message);
@@ -66,7 +68,7 @@ const Register = () => {
     {modalMessage && (
       <Modal message={modalMessage} onClose={() => {
         setModalMessage(null);
-        if (modalMessage === "Rejestracja powiodła się!") {
+        if (modalMessage === "Rejestracja powiodła się! Sprawdź skrzynkę e-mail, aby potwierdzić adres.") {
           navigate("/account");
         }
       }} />

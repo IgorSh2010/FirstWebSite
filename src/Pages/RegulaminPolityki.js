@@ -34,7 +34,9 @@ function Regulamin() {
         </p>
         <p className="ml-5">
           <p>Osoba pełnoletnia (klient) może założyć konto użytkownika, co umożliwia dostęp do historii zamówień i produktów ulubionych.</p>
+          <p>Rejestracja nie jest warunkiem złożenia zamówienia na tej witrynie. Klient ma możliwość złożenia zamówienia za pośrednictwem witryny internetowej bez uprzedniej rejestracji, korzystając z formularza zamówienia.</p>
           <p>Rejestracja wymaga podania adresu e-mail oraz hasła.</p>
+          <p>Klient zobowiązuje się do podania prawdziwych danych.</p>          
         </p>
         <p>
           <strong>§4. Płatność i dostawa</strong>
@@ -78,6 +80,7 @@ function Regulamin() {
           <p className="ml-5">- kontaktu z klientem,</p> 
           <p className="ml-5">- obsługi konta użytkownika.</p>
           <p>Podanie danych jest dobrowolne, ale niezbędne do skorzystania z usług witryny.</p>
+          <p>Dane osobowe Użytkownika nie są przekazywane przez Administratora podmiotom trzecim.</p>
         </p>
         <p>
           <strong>§3. Podstawy prawne przetwarzania</strong>
@@ -86,6 +89,27 @@ function Regulamin() {
           <p>Przetwarzanie odbywa się zgodnie z RODO, w oparciu o:</p>
           <p className="ml-5">- art. 6 ust. 1 lit. b – realizacja umowy,</p>
           <p className="ml-5">- art. 6 ust. 1 lit. f – prawnie uzasadniony interes administratora.</p>
+        </p>
+        <p>
+          <strong>§4. Prawa użytkownika</strong>
+        </p>
+        <p className="ml-5">
+          <p>Każdy użytkownik ma prawo do:</p>
+          <p className="ml-5">- dostępu do swoich danych,</p>
+          <p className="ml-5">- ich sprostowania, usunięcia lub ograniczenia przetwarzania,</p>
+          <p className="ml-5">- wniesienia sprzeciwu lub skargi do organu nadzorczego.</p>
+        </p>
+        <p>
+          <strong>§5. Okres przechowywania danych</strong>
+        </p>
+        <p className="ml-5">
+          <p>Dane przechowywane są przez okres niezbędny do realizacji celu, a także zgodnie z przepisami prawa.</p>
+        </p>
+        <p>
+          <strong>§6. Cookies</strong>
+        </p>
+        <p className="ml-5">
+          <p>Strona używa plików cookies w celach statystycznych i poprawy funkcjonalności.</p>
         </p>
       </div>  
     </section>

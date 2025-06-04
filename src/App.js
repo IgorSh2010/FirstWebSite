@@ -9,6 +9,8 @@ import Login from './Pages/Login'
 import Register from './Pages/Register'
 import Account from './Pages/Account'
 import Regulamin from './Pages/RegulaminPolityki'
+import Favorites from './Pages/Favorites'
+import CookieConsent from './components/CookieConsent';
 
 const Layout = () => {
   return (
@@ -35,6 +37,7 @@ const Layout = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
           <Route path="/regulamin" element={<Regulamin />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </main>
 
@@ -63,6 +66,7 @@ function App() {
   return (
       <Router>
         <Layout />
+        <CookieConsent />
 
         {/* FOOTER (опціонально) */}
         <footer className="bg-white p-4 text-center text-sm text-gray-400 border-t">

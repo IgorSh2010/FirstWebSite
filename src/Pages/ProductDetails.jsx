@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { client } from '../sanityClient'
+import FavoriteButton from "../components/FavoriteButton";
 import Breadcrumbs from '../components/Breadcrumbs'
 
 export default function ProductDetails() {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
-
+  
   useEffect(() => {
     client.fetch(`*[_type == "product" && _id == $id][0]{
       title,
@@ -18,12 +19,18 @@ export default function ProductDetails() {
     }`, { id }).then(setProduct).catch(console.error)
   }, [id])
 
+  useEffect(() => {
+    // Зберегти ID останнього переглянутого товару
+    localStorage.setItem("lastViewedProductId", id);
+    }, [id]);
+
   if (!product) return <div className="p-6">Loading...</div>
-  
+
   return (
   <>
     <div className='ml-1'><Breadcrumbs /></div>
     <div className="md:ml-60 ml-1 bg-white/5 backdrop-blur-md p-4 max-w-3xl mx-auto">
+      <FavoriteButton productId={id} product={product} />
       {product.imageUrl && (
         <a href={product.imageUrl} target="_blank" rel="noreferrer">
           <img

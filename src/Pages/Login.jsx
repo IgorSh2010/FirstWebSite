@@ -14,7 +14,14 @@ const Login = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/account");
+
+      const lastProductId = localStorage.getItem("lastViewedProductId");
+      if (lastProductId) {
+        navigate(`/productsMain/${lastProductId}`);
+        localStorage.removeItem("lastViewedProductId"); 
+      } else {
+        navigate("/account"); 
+      }
     } catch (error) {
       setModalMessage("Błąd: " + error.message);
     }
