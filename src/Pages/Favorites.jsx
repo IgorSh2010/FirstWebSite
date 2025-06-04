@@ -52,9 +52,10 @@ export default function Favorites() {
                 />
             )}
             
-            <p className="border p-2 rounded bg-pink-50 text-sm">
-                <strong>{fav.title}</strong> – {fav.price} zł
-            </p>
+            <div className="border p-2 rounded bg-pink-50 text-sm"> 
+                <p><strong>{fav.title}</strong></p>
+                <p>{fav.price} zł</p>
+            </div>            
             </div>
           </Link>  
         ))}
