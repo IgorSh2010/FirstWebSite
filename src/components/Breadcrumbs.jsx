@@ -9,7 +9,7 @@ const Breadcrumbs = () => {
   const pathNameMap = {
     'productsMain': 'Katalog wyrobów',
     'about': 'O nas',
-    //'finished': 'Prace wykonane',
+    'favorites': 'Ulubione',
     'products': 'Produkty',
     'cart': 'Koszyk',
     // додай інші за потребою

@@ -36,7 +36,7 @@ export default function ProductDetails() {
           <img
             src={product.imageUrl}
             alt={product.title}
-            className="w-full max-h-[500px] object-contain rounded mb-4 mx-auto cursor-pointer"
+            className="w-full max-h-[500px] object-contain rounded mx-auto cursor-pointer"
           />
         </a>
       )}

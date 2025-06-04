@@ -31,7 +31,7 @@ const FavoriteButton = ({ productId, product }) => {
 
   const handleLike = async () => {
     if (!user) {
-      setModalMessage("Спочатку увійдіть в акаунт");
+      setModalMessage("Najperw musisz się zalogować!");
       return;
     }
 
@@ -42,7 +42,7 @@ const FavoriteButton = ({ productId, product }) => {
         title: product.title,
         imageUrl: product.imageUrl,
         price: product.price,
-      });
+      });    
       
       setLiked(!liked);
     }    
@@ -51,8 +51,8 @@ const FavoriteButton = ({ productId, product }) => {
   return (
     <>
     <button
-      onClick={handleLike}
-      className="absolute top-2 right-2 text-xl z-10"
+      onClick = {handleLike}
+      className="top-2 right-2 text-xl z-10"
       title="Dodaj do ulubionych"
     >
       {liked ? "❤️" : "🤍"}
