@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { client } from '../sanityClient'
 import { Link } from 'react-router-dom'
 import CategoryFilter from '../components/CategoryFilter';
+import FavoriteButton from "../components/FavoriteButton";
 
   const Products = () => {
   const [products, setProducts] = useState([]);
@@ -51,7 +52,10 @@ import CategoryFilter from '../components/CategoryFilter';
             {product.imageUrl && (
               <img src={product.imageUrl} alt={product.title} className="w-full h-48 object-contain mb-2 rounded" />
             )}
-            <h3 className="text-lg font-semibold text-pink-800">{product.title}</h3>
+            <div className="flex items-center justify-between mt-2">
+              <h3 className="text-lg font-semibold text-pink-800">{product.title}</h3>
+              <FavoriteButton productId={product._id} product={product} />
+            </div>
             <p className="text-sm text-gray-600">{product.description}</p>
             <p className="font-bold mt-2">💰 Cena: {product.price} zł.</p>
             <p className="text-xs mt-1">{product.available ? '✅ Dostępny' : '❌ Chwilowo nie dostępny (na zamówienie)'}</p>

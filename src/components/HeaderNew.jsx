@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import classNames from "classnames";
 import { auth } from "../firebase";
@@ -84,6 +84,7 @@ const Header = () => {
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
         {/* Лого та назва */}
+        <Link to={`/`}>
         <div className="flex space-x-4 sm:flex-row items-center sm:space-x-4 text-center sm:text-left">
           <img src={logo} alt="logo" className="w-20 h-20 rounded-full bg-white p-1"/>
           <div>
@@ -95,6 +96,7 @@ const Header = () => {
             </p>
           </div>
         </div>
+        </Link>
 
         {/* Навігація (desktop) */}
         <nav className="hidden md:flex space-x-6 text-xl font-semibold uppercase">
@@ -124,28 +126,28 @@ const Header = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 >
-                <img src="/2023_Facebook_icon.svg.png" alt="Facebook" className="w-7 h-7" />
+                <img src="/2023_Facebook_icon.svg.png" alt="Facebook" title="Polub nas na Facebook" className="w-7 h-7" />
                 </a>
                 <a
                 href="https://www.instagram.com/shepetko.larisa"
                 target="_blank"
                 rel="noopener noreferrer"
                 >
-                <img src="/Instagram.png" alt="Instagram" className="w-7 h-7" />
+                <img src="/Instagram.png" alt="Instagram" title="Śledź nas na Instagram" className="w-7 h-7" />
                 </a>
                 <a
                 href="https://wa.me/48501577919"
                 target="_blank"
                 rel="noopener noreferrer"
                 >
-                <img src="/whatsapp logo.png" alt="WhatsApp" className="w-7 h-7" />
+                <img src="/whatsapp logo.png" alt="WhatsApp" title="Napisz na WhatsApp" className="w-7 h-7" />
                 </a>
                 <a
                 href="mailto:likashepetko@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 >
-                <img src="/email-icon.svg" alt="Email" className="w-7 h-7" />
+                <img src="/email-icon.svg" alt="Email" title="Napisz na e-mail" className="w-7 h-7" />
                 </a>
             </div>
           </div>
@@ -169,17 +171,17 @@ const Header = () => {
                 </div>
                 <ul className="text-sm">
                   <li>
-                    <a href="/account" className="block px-4 py-2 hover:bg-pink-100">👤 Мій кабінет</a>
+                    <a href="/account" className="block px-4 py-2 hover:bg-pink-100">👤 Moje konto</a>
                   </li>
                   <li>
-                    <a href="/favorites" className="block px-4 py-2 hover:bg-pink-100">❤️ Улюблене</a>
+                    <a href="/favorites" className="block px-4 py-2 hover:bg-pink-100">❤️ Ulubione</a>
                   </li>
                   <li>
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 hover:bg-pink-100"
                     >
-                      🚪 Вийти
+                      🚪 Wyloguj się
                     </button>
                   </li>
                 </ul>
@@ -223,13 +225,13 @@ const Header = () => {
           {user ? (
             <div className="text-white space-y-2">
               <p className="font-bold">{user.email}</p>
-              <a href="/account" className="block hover:underline">👤 Мій кабінет</a>
-              <a href="/favorites" className="block hover:underline">❤️ Улюблене</a>
+              <a href="/account" className="block hover:underline">👤 Moje konto</a>
+              <a href="/favorites" className="block hover:underline">❤️ Ulubione</a>
               <button
                 onClick={handleLogout}
                 className="w-full text-left hover:underline"
               >
-                🚪 Вийти
+                🚪 Wyloguj się
               </button>
             </div>
           ) : (

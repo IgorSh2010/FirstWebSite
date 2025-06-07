@@ -9,6 +9,7 @@ import Breadcrumbs from '../components/Breadcrumbs'
 export default function Favorites() {
     const [user, setUser] = useState(null);
     const [favorites, setFavorites] = useState([]);
+    const [hiddenCard, setHiddenCard] = useState(null);
 
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -38,12 +39,19 @@ export default function Favorites() {
         <h2 className="text-xl font-semibold mb-6">Ulubione produkty:</h2>    
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 bg-white/5 backdrop-blur-md">
         {favorites.map(fav => (
-          <Link to={`/productsMain/${fav.id}`} key={fav.id}>  
-            <div
-                key={fav.id}
-                className="bg-red-200 border p-4 rounded shadow hover:shadow-md transition max-w-xs w-full mx-auto"
-            >
-            <FavoriteButton productId={fav.id} product={fav} />          
+          <Link to={`/productsMain/${fav.id}`} key={fav.id}
+                    className={`relative transition-all duration-500 ease-in-out 
+                        ${hiddenCard === fav.id ? 'opacity-0 scale-95' : 'opacity-100'}`}>  
+            <div className="bg-red-200 border p-4 rounded shadow hover:shadow-md transition max-w-xs w-full mx-auto">
+            <FavoriteButton productId={fav.id}
+                            product={fav}
+                            onUnliked={() => {
+                            setHiddenCard(fav.id); // start animation
+                            setTimeout(() => {
+                                setFavorites(favs => favs.filter(item => item.id !== fav.id));
+                                setTimeout(() => setHiddenCard(null));
+                            }, 400); // match with duration
+                            }} />          
             {fav.imageUrl && (
                 <img
                 src={fav.imageUrl}

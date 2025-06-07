@@ -4,6 +4,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { useNavigate } from 'react-router-dom';
+import FavoriteButton from "../components/FavoriteButton";
 
 const Carousel = ({ products, title = '', showButton = true }) => {
   const navigate = useNavigate();
@@ -40,7 +41,10 @@ const Carousel = ({ products, title = '', showButton = true }) => {
                   className="w-full h-32 object-contain rounded mb-2 mx-auto transition-transform duration-300 transform hover:scale-150"
                 />
               </div>
-              <h3 className="text-sm font-semibold text-pink-700 mb-1">{product.title}</h3>
+              <div className="flex items-center overflow-visible justify-between mt-2 ml-auto">
+                <h3 className="text-sm font-semibold text-pink-700 mb-1">{product.title}</h3>
+                <FavoriteButton productId={product._id} product={product} />
+              </div>
               <p className="text-xs text-gray-600 mb-1 line-clamp-2">{product.description}</p>
               <p className="text-sm font-bold text-pink-600">{product.price} zł.</p>
               {showButton && (

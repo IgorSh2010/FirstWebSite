@@ -5,12 +5,14 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 
-const FavoriteButton = ({ productId, product }) => {
+const FavoriteButton = ({ productId, product, onUnliked }) => {
   const [liked, setLiked] = useState(false);
   const [user, setUser] = useState(null);
+  const [animate, setAnimate] = useState(false);
   const navigate = useNavigate();
   const [modalMessage, setModalMessage] = useState(null);
-
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  
   const favRef = user && doc(db, "users", user.uid, "favorites", productId);
 
   useEffect(() => {
@@ -36,35 +38,64 @@ const FavoriteButton = ({ productId, product }) => {
     }
 
     if (liked) {
-      await deleteDoc(favRef);
+      setConfirmDelete(true);
     } else {
       await setDoc(favRef, {
         title: product.title,
         imageUrl: product.imageUrl,
         price: product.price,
-      });    
-      
-      setLiked(!liked);
-    }    
+      })
+      setLiked(true); 
+    }
+    
+    setLiked((prev) => !prev);
+    setAnimate(true);
+    setTimeout(() => setAnimate(false), 300);
   };
+
+  const handleDeleteConfirmed = async () => {
+  await deleteDoc(favRef);
+  setLiked(false);
+  setConfirmDelete(false);
+  setModalMessage("Produkt usunięty z ulubionych");
+  if (onUnliked) onUnliked();
+};
+
+  const ttl = liked ? "Usuń z ulubionych" : "Dodaj do ulubionych";
 
   return (
     <>
     <button
-      onClick = {handleLike}
-      className="top-2 right-2 text-xl z-10"
-      title="Dodaj do ulubionych"
+      onClick = {(e) => {
+        e.stopPropagation(); // ⛔ Зупиняє перехід
+        e.preventDefault();  // ⛔ Зупиняє <Link>
+        handleLike();
+      }}
+      className = {'ml-auto'}
+      title = {ttl}
     >
-      {liked ? "❤️" : "🤍"}
+      <img
+        src = {liked ? '/favorite.png' : '/unfavorite.png'}
+        alt="Ulubiony"
+        className = {`w-10 h-8 flex-shrink-0 transition-transform ${animate ? "scale-125" : "scale-100"} duration-300`}
+        style={{ flexShrink: 0 }}
+      />
     </button>
 
     {modalMessage && (
-       <> 
       <Modal message={modalMessage} onClose={() => {
         setModalMessage(null);        
           navigate("/login");        
       }} />
-      </>
+    )}
+
+    {confirmDelete && (
+      <Modal
+        message="Czy na pewno chcesz usunąć produkt z Ulubionych?"
+        confirmMode
+        onClose={() => setConfirmDelete(false)}      // НІ
+        onConfirm={handleDeleteConfirmed}        // ТАК
+      />
     )}
     </>
   );

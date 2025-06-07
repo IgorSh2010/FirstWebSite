@@ -34,7 +34,7 @@ function Regulamin() {
         </p>
         <p className="ml-5">
           <p>Osoba pełnoletnia (klient) może założyć konto użytkownika, co umożliwia dostęp do historii zamówień i produktów ulubionych.</p>
-          <p>Rejestracja nie jest warunkiem złożenia zamówienia na tej witrynie. Klient ma możliwość złożenia zamówienia za pośrednictwem witryny internetowej bez uprzedniej rejestracji, korzystając z formularza zamówienia.</p>
+          <p>Klient ma możliwość złożenia zamówienia za pośrednictwem witryny internetowej po uprzedniej rejestracji, korzystając z formularza zamówienia.</p>
           <p>Rejestracja wymaga podania adresu e-mail oraz hasła.</p>
           <p>Klient zobowiązuje się do podania prawdziwych danych.</p>          
         </p>
@@ -75,7 +75,7 @@ function Regulamin() {
           <strong>§2. Zakres i cel przetwarzania</strong>
         </p>
         <p className="ml-5">
-          <p>Dane osobowe (e-mail, imię, dane kontaktowe) przetwarzane są w celu:</p>
+          <p>Dane osobowe (e-mail, imię, telefon, dane kontaktowe) przetwarzane są w celu:</p>
           <p className="ml-5">- realizacji zamówień,</p>
           <p className="ml-5">- kontaktu z klientem,</p> 
           <p className="ml-5">- obsługi konta użytkownika.</p>
