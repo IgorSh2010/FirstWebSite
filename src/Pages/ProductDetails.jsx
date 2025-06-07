@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { client } from '../sanityClient'
 import FavoriteButton from "../components/FavoriteButton";
-import Breadcrumbs from '../components/Breadcrumbs'
+import Breadcrumbs from '../components/Breadcrumbs';
+import OrderButton  from '../components/OrderButton';
 
 export default function ProductDetails() {
   const { id } = useParams()
@@ -48,6 +49,9 @@ export default function ProductDetails() {
         <p className="text-sm">{product.available ? '✅ Dostępny' : '❌ Chwilowo nie dostępny (na zamówienie)'}</p>
       </div>
       <p className="font-semibold mt-2">📌 Opis: {product.description}</p>
+
+      <OrderButton product={product} />
+      
     </div>
   </>
   )

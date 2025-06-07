@@ -177,6 +177,9 @@ const Header = () => {
                     <a href="/favorites" className="block px-4 py-2 hover:bg-pink-100">❤️ Ulubione</a>
                   </li>
                   <li>
+                    <a href="/#" className="block px-4 py-2 hover:bg-pink-100">💼 Moje zamówienia</a>
+                  </li>
+                  <li>
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 hover:bg-pink-100"

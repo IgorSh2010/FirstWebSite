@@ -5,6 +5,7 @@ import { auth, db } from '../firebase'
 import { onAuthStateChanged } from "firebase/auth";
 import FavoriteButton from "../components/FavoriteButton";
 import Breadcrumbs from '../components/Breadcrumbs'
+import OrderButton from "../components/OrderButton";
 
 export default function Favorites() {
     const [user, setUser] = useState(null);
@@ -63,9 +64,12 @@ export default function Favorites() {
             <div className="border p-2 rounded bg-pink-50 text-sm"> 
                 <p><strong>{fav.title}</strong></p>
                 <p>{fav.price} zł</p>
-            </div>            
             </div>
-          </Link>  
+            <div> 
+            <OrderButton className="text-sm" product={fav} /> 
+            </div>           
+            </div> 
+          </Link>
         ))}
         </div>
     </div>
