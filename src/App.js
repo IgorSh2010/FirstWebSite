@@ -11,6 +11,7 @@ import Account from './Pages/Account'
 import Regulamin from './Pages/RegulaminPolityki'
 import Favorites from './Pages/Favorites'
 import CookieConsent from './components/CookieConsent';
+import Orders from './components/Orders';
 
 const Layout = () => {
   return (
@@ -38,6 +39,8 @@ const Layout = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/regulamin" element={<Regulamin />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/orders" element={<Orders />} />
+          {/* Додайте інші маршрути за потребою */}
         </Routes>
       </main>
 

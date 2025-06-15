@@ -36,7 +36,7 @@ export default function Favorites() {
     <div className='ml-1'><Breadcrumbs /></div>
 
     {favorites.length > 0 && (
-    <div className="max-w-screen-xl mx-auto p-4">
+    <div className="max-w-screen-xl mx-auto p-4 inset-0 pointer-events-auto">
         <h2 className="text-xl font-semibold mb-6">Ulubione produkty:</h2>    
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 bg-white/5 backdrop-blur-md">
         {favorites.map(fav => (
@@ -65,9 +65,9 @@ export default function Favorites() {
                 <p><strong>{fav.title}</strong></p>
                 <p>{fav.price} zł</p>
             </div>
-            <div> 
-            <OrderButton className="text-sm" product={fav} /> 
-            </div>           
+                <div className="mt-4">
+                <OrderButton product={fav}/>
+                </div>                      
             </div> 
           </Link>
         ))}

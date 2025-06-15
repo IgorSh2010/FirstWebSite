@@ -33,6 +33,10 @@ const OrderButton = ({ product }) => {
             <li>
               <a
                 href="https://m.me/larysa.shepetko"
+                onClick={(e) => {e.preventDefault();
+                                  setDropdownOpen(false);
+                                  window.open("https://m.me/larysa.shepetko", 
+                                  "_blank", "noreferrer");}}
                 target="_blank"
                 rel="noreferrer"
                 className="block hover:bg-blue-600 hover:text-white px-4 py-2"
@@ -43,6 +47,10 @@ const OrderButton = ({ product }) => {
             <li>
               <a
                 href="https://www.instagram.com/shepetko.larisa"
+                onClick={(e) => {e.preventDefault();
+                                  setDropdownOpen(false);
+                                  window.open("https://www.instagram.com/shepetko.larisa", 
+                                  "_blank", "noreferrer");}}
                 target="_blank"
                 rel="noreferrer"
                 className="block hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 hover:text-white px-4 py-2"
@@ -53,6 +61,10 @@ const OrderButton = ({ product }) => {
             <li>
               <a
                 href={`https://wa.me/48501577919?text=Cześć. Chcę zamówić: ${product.title}`}
+                onClick={(e) => {e.preventDefault();
+                                  setDropdownOpen(false);
+                                  window.open(`https://wa.me/48501577919?text=Cześć. Chcę zamówić: ${product.title}`, 
+                                  "_blank", "noreferrer");}}
                 target="_blank"
                 rel="noreferrer"
                 className="block hover:bg-green-500 hover:text-white px-4 py-2"
@@ -62,7 +74,8 @@ const OrderButton = ({ product }) => {
             </li>
             <li>
               <button
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   setDropdownOpen(false);
                   setOrderModalOpen(true);
                 }}

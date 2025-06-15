@@ -1,24 +1,35 @@
 import { useEffect, useState } from "react";
+import { auth, db } from "../firebase";
 import { onAuthStateChanged, signOut, sendEmailVerification } from "firebase/auth";
-import { auth } from "../firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import Modal from "../components/Modal"; 
 
 const Account = () => {
   const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState({ fullName: "", phone: "" });
+  const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [emailVerified, setEmailVerified] = useState(false);
-  const [message, setMessage] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (!currentUser) {
         navigate("/login");
       } else {
         setUser(currentUser);
         setEmailVerified(currentUser.emailVerified);
+        const docRef = doc(db, "users", currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setProfile(docSnap.data());
+        }
+        setLoading(false);
       }
     });
-
+   
     const interval = setInterval(async () => {
       if (auth.currentUser) {
         await auth.currentUser.reload();
@@ -30,7 +41,15 @@ const Account = () => {
         unsubscribe();
         clearInterval(interval);
       };
-    }, [navigate]);
+  }, [navigate]);
+
+  const handleSave = async () => {
+    if (!user) return;
+    const docRef = doc(db, "users", user.uid);
+    await setDoc(docRef, profile, { merge: true });
+    setModalMessage("Profil został zapisany!");
+    setEditMode(false);
+  };
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -41,51 +60,131 @@ const Account = () => {
     if (user) {
       try {
         await sendEmailVerification(user);
-        setMessage("📩 E-mail o potwierdzeniu adresu został ponownie wysłany.");
+        setModalMessage("📩 E-mail o potwierdzeniu adresu został ponownie wysłany.");
       } catch (error) {
-        setMessage("❌ Błąd podczas wysyłania e-maila: " + error.message);
+        setModalMessage("❌ Błąd podczas wysyłania e-maila: " + error.message);
       }
     }
   };
+ 
+  if (loading) {
+    return (
+      <div className="text-center text-gray-600 py-20">
+        Ładowanie profilu...
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-xl mx-auto mt-20 bg-white shadow-md rounded p-6">
-      <h1 className="text-2xl font-bold mb-4">Moje konto</h1>
+    <div className="max-w-xl mx-auto mt-20 bg-white shadow-lg rounded-lg p-6">
+      <h1 className="text-3xl font-bold text-pink-700 mb-6 text-center">
+        Moje konto
+      </h1>
 
-      {user && !emailVerified && (
-        <div className="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded">
-          <p>
-            ⚠️ Twój adres e-mail nie został jeszcze potwierdzony. Sprawdź swoją skrzynkę e-mail.
-          </p>
-          <button
-            onClick={handleResendVerification}
-            className="mt-2 bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500"
-          >
-            Wyślij ponownie e-mail
-          </button>
-        </div>
-      )}
+      <div className="space-y-4">
 
-      {message && (
-        <div className="mb-4 text-sm text-blue-600 bg-blue-100 p-2 rounded">
-          {message}
+        <div className="bg-pink-100 p-4 rounded shadow">
+          <p className="text-sm text-gray-600">ID użytkownika:</p>
+          <p className="font-mono break-all">{user.uid}</p>
         </div>
-      )}
 
-      {user && (
-        <div className="space-y-2">
-          <p><strong>ID użytkownika:</strong> {user.uid}</p>
-          <p><strong>E-mail:</strong> {user.email}</p>
-          <p><strong>Imię i Nazwisko:</strong> </p>
-          <p><strong>Nr. telefonu:</strong> </p>
-          <button
-            onClick={handleLogout}
-            className="mt-4 bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600"
-          >
-            Wylogować się
-          </button>
+        <div className="bg-pink-100 p-4 rounded shadow">
+          <p className="text-sm text-gray-600">E-mail:</p>
+          <p>{user.email}</p>
         </div>
-      )}
+
+        <div className="bg-pink-100 p-4 rounded shadow">
+          <p className="text-sm text-gray-600">Imię i Nazwisko:</p>
+          {editMode ? (
+            <input
+              type="text"
+              className="w-full border p-2 rounded mt-1"
+              value={profile.fullName}
+              onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
+            />
+          ) : (
+            <p className="mt-1">{profile.fullName || "-"}</p>
+          )}
+        </div>
+
+        <div className="bg-pink-100 p-4 rounded shadow">
+          <p className="text-sm text-gray-600">Numer telefonu:</p>
+          {editMode ? (
+            <input
+              type="text"
+              className="w-full border p-2 rounded mt-1"
+              value={profile.phone}
+              onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+            />
+          ) : (
+            <p className="mt-1">{profile.phone || "-"}</p>
+          )}
+        </div>
+
+        {/* Przyciski */}
+        <div className="flex flex-col md:flex-row justify-between mt-4 space-y-2 md:space-y-0 md:space-x-4">
+          {editMode ? (
+            <>
+              <button
+                onClick={handleSave}
+                className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+              >
+                💾 Zapisz
+              </button>
+
+              <button
+                onClick={() => setEditMode(false)}
+                className="flex-1 bg-gray-400 text-white py-2 rounded hover:bg-gray-500 transition"
+              >
+                ❌ Anuluj
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => setEditMode(true)}
+              className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-700 transition"
+            >
+              ✏️ Edytuj profil
+            </button>
+          )}
+        </div>
+
+        {user && !emailVerified && (
+            <div className="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded">
+              <p>
+                ⚠️ Twój adres e-mail nie został jeszcze potwierdzony. Sprawdź swoją skrzynkę e-mail.
+              </p>
+              <button
+                onClick={handleResendVerification}
+                className="mt-2 bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500"
+              >
+                Wyślij ponownie e-mail
+              </button>
+            </div>
+          )}
+
+          {modalMessage && (
+            <Modal
+              message={modalMessage}
+              onClose={() => setModalMessage("")}
+              onConfirm={() => setModalMessage("")}
+              confirmMode={false} />
+          )}
+
+        <button
+          onClick={() => navigate("/orders")}
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+        >
+          📦 Moje zamówienia
+        </button>
+
+        <button
+          onClick={handleLogout}
+          className="mt-6 w-full bg-gray-300 text-gray-800 py-2 rounded hover:bg-gray-400 transition"
+        >
+          🚪 Wyloguj się
+        </button>
+      </div>
     </div>
   );
 };
