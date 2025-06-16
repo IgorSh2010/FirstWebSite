@@ -10,7 +10,7 @@ export const createOrder = async (orderData, product = null) => {
     productName: product?.title || "Nieokreślony",
     price: product?.price || 0,
     ...orderData, 
-    status: "W realizacji",
+    status: "Nowe",
     createdAt: serverTimestamp()
   };
 

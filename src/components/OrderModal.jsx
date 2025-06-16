@@ -1,7 +1,7 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
-import { createOrder } from "../Servises/orderService"; // Adjust the import path as necessary
-import Modal from "./Modal"; // Assuming you have a Modal component for displaying the order form
+import { createOrder } from "../Servises/orderService";
+import Modal from "./Modal";
 
 const OrderModal = ({ product = null , onClose }) => {
   const productTitle = product ? product.title : '';
@@ -13,7 +13,7 @@ const OrderModal = ({ product = null , onClose }) => {
   });
 
   const [status, setStatus] = useState(null);
-  const [modalMessage, setmodalMessage] = useState(true);
+  const [modalMessage, setmodalMessage] = useState(false);
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -76,6 +76,7 @@ const OrderModal = ({ product = null , onClose }) => {
             onChange={handleChange}
             onClick={(e) => { e.preventDefault(); }}
           >{`Cześć. Chcę zamówić: ${productTitle}`}</textarea>
+          
           <div className="flex flex-row gap-4">
             <button
                 type="submit"

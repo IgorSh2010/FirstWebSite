@@ -12,6 +12,8 @@ import Regulamin from './Pages/RegulaminPolityki'
 import Favorites from './Pages/Favorites'
 import CookieConsent from './components/CookieConsent';
 import Orders from './components/Orders';
+import AdminOrders from './components/AdminOrders'
+import AdminProtectedRoute from './components/AdminProtectedRoute'
 
 const Layout = () => {
   return (
@@ -40,6 +42,7 @@ const Layout = () => {
           <Route path="/regulamin" element={<Regulamin />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
           {/* Додайте інші маршрути за потребою */}
         </Routes>
       </main>

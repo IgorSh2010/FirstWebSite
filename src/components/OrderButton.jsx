@@ -28,9 +28,9 @@ const OrderButton = ({ product }) => {
 
       {dropdownOpen && (
         <div className="absolute left-16 mb-40 bg-pink-200 text-gray-700 shadow-lg rounded-md w-56 z-50 border-2 border-pink-800">
-          <p className="bg-pink-900 text-white font-bold px-4 py-2 rounded-t">Wybierz sposób zamówienia:</p>
+          <p className="text-sm bg-pink-900 text-white font-bold px-4 py-2 rounded-t">Wybierz sposób zamówienia:</p>
           <ul className="text-sm">
-            <li>
+            {/*<li>
               <a
                 href="https://m.me/larysa.shepetko"
                 onClick={(e) => {e.preventDefault();
@@ -57,7 +57,7 @@ const OrderButton = ({ product }) => {
               >
                 📸 Instagram
               </a>
-            </li>
+            </li>*/}
             <li>
               <a
                 href={`https://wa.me/48501577919?text=Cześć. Chcę zamówić: ${product.title}`}

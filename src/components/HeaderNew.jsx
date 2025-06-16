@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { auth } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import OrderModal from "./OrderModal";
+import { getUserRole } from "../Utils/roles";
 
 const Header = () => {
   const location = useLocation();
@@ -17,10 +18,18 @@ const Header = () => {
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const [orderModalOpen, setOrderModalOpen] = useState(false);
+  const [userRole, setUserRole] = useState("user");
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+          const fetchedRole = await getUserRole(currentUser.uid);
+          setUser(currentUser);
+          setUserRole(fetchedRole);
+        } else {
+          setUser(null);
+          setUserRole("user");
+        }
     });
     return () => unsubscribe();
   }, []);
@@ -156,6 +165,10 @@ const Header = () => {
             </div>
           </div>
         </div>
+        
+        {userRole === "admin" && (
+        <a href="/admin/orders" className=" bg-gray-700  hover:bg-gray-400 px-3 py-1 rounded text-white hover:text-pink-700 font-bold">⚙ Admin Panel</a>
+        )}
 
         {/* Додаткові кнопки */}
         {user ? (
