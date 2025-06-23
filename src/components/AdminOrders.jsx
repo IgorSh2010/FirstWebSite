@@ -2,6 +2,7 @@ import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { ArrowDownUp, Pencil } from "lucide-react";
+import ChatWindow from "./ChatWindow";
 
 const statusColors = {
   "Nowe": "bg-yellow-100 border-yellow-400",
@@ -98,6 +99,13 @@ const AdminOrders = () => {
                   <option value="zrealizowane">✅ zrealizowane</option>
                   <option value="anulowane">❌ anulowane</option>
                 </select>
+                {/*//<button
+                // onClick={() => }
+                 // className="flex items-center gap-2 text-sm font-bold text-pink-700 hover:text-pink-900"
+                //>
+                //</div>  Sortuj po dacie <ArrowDownUp size={18} />
+                //</div></button>*/}
+                <ChatWindow orderId={order.id} isAdmin />
               </div>
             </div>
           ))}

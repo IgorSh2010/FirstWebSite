@@ -5,6 +5,7 @@ import { auth } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import OrderModal from "./OrderModal";
 import { getUserRole } from "../Utils/roles";
+import { UserRound, Heart, LogOut, NotebookTabs } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -130,7 +131,7 @@ const Header = () => {
 
         {/* Контакти */}
         <div className="text-center md:text-right">
-          <div className="flex space-x-4 md:items-end md:text-right">            
+          <div className="flex md:mb-auto space-x-4 gap-2 md:items-end md:text-right">            
             <div className="flex flex-row flex-wrap md:flex-row gap-2 items-end md:justify-end">
                 <a
                 href="https://www.facebook.com/larysa.shepetko"
@@ -163,12 +164,20 @@ const Header = () => {
                 <img src="/email-icon.svg" alt="Email" title="Napisz na e-mail" className="w-7 h-7" />
                 </a>
             </div>
+
+            {userRole === "admin" && (
+            <a href="/admin/orders" className=" bg-gray-700  hover:bg-gray-400 px-3 py-1 rounded text-white hover:text-pink-700 font-bold">⚙ Admin Panel</a>
+            )}
+
+            {/* Кнопка мобільного меню */}
+            <button
+              className="md:hidden text-3xl focus:outline-none md:mr-0"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              ☰
+            </button>            
           </div>
         </div>
-        
-        {userRole === "admin" && (
-        <a href="/admin/orders" className=" bg-gray-700  hover:bg-gray-400 px-3 py-1 rounded text-white hover:text-pink-700 font-bold">⚙ Admin Panel</a>
-        )}
 
         {/* Додаткові кнопки */}
         {user ? (
@@ -226,40 +235,34 @@ const Header = () => {
           onClose={() => setOrderModalOpen(false)}
         />
           )}
-
-        {/* Кнопка мобільного меню */}
-        <button
-          className="md:hidden text-3xl focus:outline-none"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          ☰
-        </button>
       </div>
 
       {/* Мобільне меню */}
       {menuOpen && (
         <div ref={mobileMenuRef} className="md:hidden px-4 pb-4 space-y-2 bg-gray-800 text-white text-center mt-2 rounded-md">
-          <a href="/" className="block hover:underline">
-            Glówna
-          </a>
-          <a href="/productsMain" className="block hover:underline">
-            Katalog
-          </a>
-          <a href="/about" className="block hover:underline">
-            O nas
-          </a>
+          <div className="flex justify-center gap-5 w-full items-center">
+            <a href="/" className="hover:underline">
+              Glówna
+            </a>
+            <a href="/productsMain" className="hover:underline">
+              Katalog
+            </a>
+            <a href="/about" className="hover:underline">
+              O nas
+            </a>
+          </div>
           <hr className="my-2 border-gray-600" />
           {user ? (
             <div className="text-white space-y-2">
               <p className="font-bold">{user.email}</p>
-              <a href="/account" className="block hover:underline">👤 Moje konto</a>
-              <a href="/favorites" className="block hover:underline">❤️ Ulubione</a>
-              <a href="/#" className="block hover:underline">💼 Moje zamówienia</a>
+              <a href="/account" className="flex items-center justify-center gap-1 w-full hover:underline"><UserRound size={16} /> Moje konto</a>
+              <a href="/favorites" className="flex items-center justify-center gap-1 w-full hover:underline"><Heart size={16}/> Ulubione</a>
+              <a href="/#" className="flex items-center justify-center gap-1 w-full hover:underline"><NotebookTabs size={16}/>Moje zamówienia</a>
               <button
                 onClick={handleLogout}
-                className="w-full text-left hover:underline"
+                className="flex items-center justify-center gap-1 w-full text-left hover:underline"
               >
-                🚪 Wyloguj się
+                <LogOut size={16} />Wyloguj się
               </button>
             </div>
           ) : (
