@@ -1,55 +1,54 @@
-import { useState } from "react";
-import emailjs from "@emailjs/browser";
+import { useState, useEffect } from "react";
 import { createOrder } from "../Servises/orderService";
 import Modal from "./Modal";
+import { getDoc, doc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 const OrderModal = ({ product = null , onClose }) => {
-  const productTitle = product ? product.title : '';
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
-    notes: `Chcę zamówić: ${productTitle}`,
+    notes: "",
   });
 
-  const [status, setStatus] = useState(null);
   const [modalMessage, setmodalMessage] = useState(false);
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = auth.currentUser;
+      if (user?.uid) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          setFormData((prev) => ({
+            ...prev,
+            name: data.fullName || "",
+            email: data.email || "",
+          }));
+        }
+      }
+    };
+    fetchUserData();
+  }, []);
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await createOrder(formData, product);
-    setmodalMessage("Twoje zamówienie zostało zapisane!");
+        
     try {
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: formData.name,
-          reply_to: formData.email,
-          message: formData.message,
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      );
-      setStatus("success");
-      setTimeout(() => {
-        onClose();
-      }, 2000); // Close modal after 2 seconds
+      await createOrder(formData, product);
+        setmodalMessage("Twoje zamówienie zostało wysłane i zapisane do bazy!");
     } catch (error) {
-      setStatus("error");
-      setmodalMessage("EmailJS Error:", error);
+        setmodalMessage("Błąd podczas zapisu zamówienia. ", error);
     }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-[9999] pointer-events-auto"> 
-      {status === "success" ? (
-        <p className="text-green-600">Zamówienie zostało wysłane!</p>
-      ) : (
-        <form onSubmit={handleSubmit} onClick={(e) => { e.preventDefault(); }} className="space-y-4 text-left z-50">
-          <h3 className="text-lg text-white font-bold">Formularz zamówienia</h3>
+      <form onSubmit={handleSubmit} className="space-y-4 text-left z-50 bg-white p-6 rounded shadow max-w-md w-full">
+          <h3 className="text-lg text-pink-700 font-bold">Formularz zamówienia</h3>
           <input
             name="name"
             type="text"
@@ -57,7 +56,6 @@ const OrderModal = ({ product = null , onClose }) => {
             className="w-full border p-2 rounded"
             required
             onChange={handleChange}
-            onClick={(e) => { e.preventDefault(); }}
           />
           <input
             name="email"
@@ -66,37 +64,35 @@ const OrderModal = ({ product = null , onClose }) => {
             className="w-full border p-2 rounded"
             required
             onChange={handleChange}
-            onClick={(e) => { e.preventDefault(); }}
           />
           <textarea
             name="notes"
-            placeholder="Dodatkowe informacje"
+            value={formData.notes}
+            onChange={handleChange}
+            placeholder="Dodatkowe informacje, np. adres dostawy, ilość, terminy itp."
             className="w-full border p-2 rounded text-black"
             rows={3}
-            onChange={handleChange}
-            onClick={(e) => { e.preventDefault(); }}
-          >{`Cześć. Chcę zamówić: ${productTitle}`}</textarea>
+          ></textarea>
           
           <div className="flex flex-row gap-4">
             <button
                 type="submit"
-                className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 w-full"
+                className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 w-full" 
+                onClick= {(e) => {e.stopPropagation(); e.preventDefault(); handleSubmit(e);} }              
             >
                 Wyślij zamówienie
             </button>
-            <button onClick={onClose} className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 w-full">
+            <button onClick= {(e) => {e.stopPropagation(); e.preventDefault(); onClose()}} className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 w-full">
                 Zamknij
             </button> 
           </div>
-          {status === "error" && <p className="text-red-500">Wystąpił błąd. Spróbuj ponownie.</p>}
         </form>
-      )}
 
       {modalMessage && (
         <Modal
           message={modalMessage}
           onClose={() => setmodalMessage("")}
-          onConfirm={() => setmodalMessage("")}
+          onConfirm={() => {setmodalMessage(""); onClose(); }}
           confirmMode={false}
         />
       )}

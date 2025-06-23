@@ -16,15 +16,22 @@ const Orders = () => {
         navigate("/login");
       } else {
         setUser(currentUser);
-        const ordersRef = collection(db, "users", currentUser.uid, "orders");
-        const snapshot = await getDocs(ordersRef);
-        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setOrders(data);
-        setLoading(false);
       }
     });
     return () => unsubscribe();
   }, [navigate]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (!user) return;
+      const ordersRef = collection(db, "users", user.uid, "userOrders", "");//, "", currentUser.uid
+      const snapshot = await getDocs(ordersRef);
+      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setOrders(data);
+      setLoading(false);
+    }
+    fetchOrders();
+    }, [user]);
 
   if (loading) {
     return (
@@ -51,16 +58,21 @@ const Orders = () => {
                   Zamówienie: {order.productName}
                 </p>
                 <span className={`px-3 py-1 rounded text-xs font-bold 
-                  ${order.status === "Zrealizowane" ? "bg-green-500 text-white" :
-                    order.status === "W realizacji" ? "bg-yellow-400 text-black" :
-                    "bg-red-400 text-white"}`}>
+                  ${order.status === "zrealizowane" ? "bg-green-500 text-white" :
+                    order.status === "opłacone, w realizacji" ? "bg-green-200 text-black" :
+                    order.status === "Nowe" ? "bg-blue-500 text-white" :
+                    order.status === "wysłane" ? "bg-yellow-400 text-black" :
+                    order.status === "oczekujące na opłatę" ? "bg-yellow-200 text-black" :
+                    order.status === "anulowane" ? "bg-red-200" :
+                    "bg-gray-200 text-white"}`}>
                   {order.status}
                 </span>
               </div>
 
-              <p><strong>Data:</strong> {new Date(order.date).toLocaleDateString()}</p>
+              <p><strong>Data:</strong> {new Date(order.date).toLocaleString()}</p>
               <p><strong>Cena:</strong> {order.price} zł</p>
               <p><strong>Uwagi:</strong> {order.notes || "-"}</p>
+              <p><strong>uId:</strong> {order.userId || "-"}</p>
             </div>
           ))}
         </div>

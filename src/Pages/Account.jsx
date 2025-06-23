@@ -4,10 +4,11 @@ import { onAuthStateChanged, signOut, sendEmailVerification } from "firebase/aut
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal"; 
+import { Edit, Save, X, LogOut, NotebookTabs, ClockAlert } from 'lucide-react';
 
 const Account = () => {
   const [user, setUser] = useState(null);
-  const [profile, setProfile] = useState({ fullName: "", phone: "" });
+  const [profile, setProfile] = useState({ fullName: "", phone: "" , email: ""});
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [emailVerified, setEmailVerified] = useState(false);
@@ -46,7 +47,7 @@ const Account = () => {
   const handleSave = async () => {
     if (!user) return;
     const docRef = doc(db, "users", user.uid);
-    await setDoc(docRef, profile, { merge: true });
+    await setDoc(docRef, { ...profile, email: user.email }, { merge: true });
     setModalMessage("Profil został zapisany!");
     setEditMode(false);
   };
@@ -127,24 +128,24 @@ const Account = () => {
             <>
               <button
                 onClick={handleSave}
-                className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+                className="flex items-center justify-center gap-2 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
               >
-                💾 Zapisz
+                <Save size={20} />Zapisz
               </button>
 
               <button
                 onClick={() => setEditMode(false)}
-                className="flex-1 bg-gray-400 text-white py-2 rounded hover:bg-gray-500 transition"
+                className="flex items-center justify-center gap-2 w-full bg-red-400 text-white py-2 rounded hover:bg-red-700 transition"
               >
-                ❌ Anuluj
+                <X size={20} />Anuluj
               </button>
             </>
           ) : (
             <button
               onClick={() => setEditMode(true)}
-              className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-700 transition"
+              className="flex items-center justify-center gap-2 w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-700 transition"
             >
-              ✏️ Edytuj profil
+              <Edit size={20} />Edytuj profil
             </button>
           )}
         </div>
@@ -152,7 +153,7 @@ const Account = () => {
         {user && !emailVerified && (
             <div className="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded">
               <p>
-                ⚠️ Twój adres e-mail nie został jeszcze potwierdzony. Sprawdź swoją skrzynkę e-mail.
+                <ClockAlert size={30} className="text-yellow-800 items-center justify-center"/> Twój adres e-mail nie został jeszcze potwierdzony. Sprawdź swoją skrzynkę e-mail.
               </p>
               <button
                 onClick={handleResendVerification}
@@ -173,16 +174,16 @@ const Account = () => {
 
         <button
           onClick={() => navigate("/orders")}
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+          className="flex items-center justify-center gap-2 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
         >
-          📦 Moje zamówienia
+          <NotebookTabs size={20} /> Moje zamówienia
         </button>
 
         <button
           onClick={handleLogout}
-          className="mt-6 w-full bg-gray-300 text-gray-800 py-2 rounded hover:bg-gray-400 transition"
+          className="mt-6 flex items-center justify-center gap-2 w-full bg-gray-300 text-gray-800 py-2 rounded hover:bg-gray-400 transition"
         >
-          🚪 Wyloguj się
+          <LogOut size={20}/> Wyloguj się
         </button>
       </div>
     </div>

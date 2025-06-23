@@ -11,6 +11,7 @@ export default function ProductDetails() {
   
   useEffect(() => {
     client.fetch(`*[_type == "product" && _id == $id][0]{
+      _id,
       title,
       description,
       price,

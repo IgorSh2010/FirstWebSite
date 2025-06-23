@@ -1,36 +1,36 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import OrderModal from "./OrderModal";
 
 const OrderButton = ({ product }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  //const [dropdownOpen, setDropdownOpen] = useState(false);
   const [orderModalOpen, setOrderModalOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   // Закриття дропдауну при кліку поза межами
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  //useEffect(() => {
+    //const handleClickOutside = (e) => {
+    //  if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+    //    setDropdownOpen(false);
+    //  }    };
+    //document.addEventListener("mousedown", handleClickOutside);
+    //return () => document.removeEventListener("mousedown", handleClickOutside);
+  //}, []);
 
   return (
     <div ref={dropdownRef} className="relative text-left hidden md:flex items-center space-x-4">
       <button
-        onClick={(e) => {e.stopPropagation(); e.preventDefault(); setDropdownOpen(!dropdownOpen)}}
+        //onClick={(e) => {e.stopPropagation(); e.preventDefault(); setDropdownOpen(!dropdownOpen)}}
+        onClick={(e) => {e.stopPropagation(); e.preventDefault(); setOrderModalOpen(true)}}
         className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-pink-700"
       >
         <span>Zamów</span>
       </button>
 
-      {dropdownOpen && (
+      {/*{dropdownOpen && (
         <div className="absolute left-16 mb-40 bg-pink-200 text-gray-700 shadow-lg rounded-md w-56 z-50 border-2 border-pink-800">
           <p className="text-sm bg-pink-900 text-white font-bold px-4 py-2 rounded-t">Wybierz sposób zamówienia:</p>
           <ul className="text-sm">
-            {/*<li>
+            <li>
               <a
                 href="https://m.me/larysa.shepetko"
                 onClick={(e) => {e.preventDefault();
@@ -57,7 +57,7 @@ const OrderButton = ({ product }) => {
               >
                 📸 Instagram
               </a>
-            </li>*/}
+            </li>
             <li>
               <a
                 href={`https://wa.me/48501577919?text=Cześć. Chcę zamówić: ${product.title}`}
@@ -86,7 +86,7 @@ const OrderButton = ({ product }) => {
             </li>
           </ul>
         </div>
-      )}
+      )}*/}
 
       {orderModalOpen && (
         <OrderModal
