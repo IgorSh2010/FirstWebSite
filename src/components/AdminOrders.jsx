@@ -1,8 +1,8 @@
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { ArrowDownUp, Pencil } from "lucide-react";
-import ChatWindow from "./ChatWindow";
 
 const statusColors = {
   "Nowe": "bg-yellow-100 border-yellow-400",
@@ -16,6 +16,7 @@ const statusColors = {
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [sortDesc, setSortDesc] = useState(true);
+  const navigate = useNavigate();
 
   const fetchOrders = async () => {
     const snapshot = await getDocs(collection(db, "orders"));
@@ -61,7 +62,7 @@ const AdminOrders = () => {
           {sortedOrders.map(order => (
             <div
               key={order.id}
-              className={`flex flex-col md:flex-row p-4 shadow-md rounded-lg hover:shadow-lg transition border-l-4 ${statusColors[order.status] || "border-gray-300 bg-white/70"}`}
+              className={`relative flex flex-col md:flex-row p-4 shadow-md rounded-lg hover:shadow-lg transition border-l-4 ${statusColors[order.status] || "border-gray-300 bg-white/70"}`}
             >
               {order.imageUrl && (
                 <div className="flex-shrink-0 w-full md:w-40 h-32 mb-4 md:mb-0">
@@ -90,7 +91,7 @@ const AdminOrders = () => {
                 <select
                   value={order.status}
                   onChange={(e) => handleStatusChange(order.id, order.userId, e.target.value)}
-                  className="border border-pink-300 p-2 rounded bg-white hover:bg-pink-50 transition"
+                  className="absolute top-10 right-2 border border-pink-300 p-2 rounded bg-white hover:bg-pink-50 transition"
                 >
                   <option value="Nowe">📜 Nowe</option>
                   <option value="oczekujące na opłatę">⏳ oczekujące na opłatę</option>
@@ -99,13 +100,11 @@ const AdminOrders = () => {
                   <option value="zrealizowane">✅ zrealizowane</option>
                   <option value="anulowane">❌ anulowane</option>
                 </select>
-                {/*//<button
-                // onClick={() => }
-                 // className="flex items-center gap-2 text-sm font-bold text-pink-700 hover:text-pink-900"
-                //>
-                //</div>  Sortuj po dacie <ArrowDownUp size={18} />
-                //</div></button>*/}
-                <ChatWindow orderId={order.id} isAdmin />
+                <button
+                  onClick={() => navigate(`/chat/${order.id}`)} 
+                  className="absolute bottom-2 right-2 md:mt-0 bg-pink-600 text-white text-sm px-3 py-1 rounded hover:bg-pink-500 transition">
+                    Rozpocznij rozmowę
+                </button>
               </div>
             </div>
           ))}

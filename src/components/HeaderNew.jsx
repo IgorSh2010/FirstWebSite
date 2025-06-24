@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import OrderModal from "./OrderModal";
 import { getUserRole } from "../Utils/roles";
-import { UserRound, Heart, LogOut, NotebookTabs } from "lucide-react";
+import { Speech, UserRound, Heart, LogOut, NotebookTabs } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -197,20 +197,27 @@ const Header = () => {
                 </div>
                 <ul className="text-sm">
                   <li>
-                    <a href="/account" className="block px-4 py-2 hover:bg-pink-100">👤 Moje konto</a>
+                    <a href="/account" className="flex items-center gap-1 w-full px-4 py-2 hover:bg-pink-100">
+                    <UserRound size={16} color="black"/>Moje konto</a>
                   </li>
                   <li>
-                    <a href="/favorites" className="block px-4 py-2 hover:bg-pink-100">❤️ Ulubione</a>
+                    <a href="/favorites" className="flex items-center gap-1 w-full px-4 py-2 hover:bg-pink-100">
+                    <Heart size={16} color="red"/>Ulubione</a>
                   </li>
                   <li>
-                    <a href="/orders" className="block px-4 py-2 hover:bg-pink-100">💼 Moje zamówienia</a>
+                    <a href="/orders" className="flex items-center gap-1 w-full px-4 py-2 hover:bg-pink-100">
+                    <NotebookTabs size={16} color="green"/>Moje zamówienia</a>
+                  </li>
+                  <li>
+                    <a href="/conservations" className="flex items-center gap-1 w-full px-4 py-2 hover:bg-pink-100">
+                    <Speech size={16} color="blue"/>Moje rozmowy</a>
                   </li>
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 hover:bg-pink-100"
+                      className="flex items-center gap-1 w-full text-left px-4 py-2 hover:bg-pink-100"
                     >
-                      🚪 Wyloguj się
+                      <LogOut size={16} color="gray"/> Wyloguj się
                     </button>
                   </li>
                 </ul>
@@ -255,9 +262,10 @@ const Header = () => {
           {user ? (
             <div className="text-white space-y-2">
               <p className="font-bold">{user.email}</p>
-              <a href="/account" className="flex items-center justify-center gap-1 w-full hover:underline"><UserRound size={16} /> Moje konto</a>
-              <a href="/favorites" className="flex items-center justify-center gap-1 w-full hover:underline"><Heart size={16}/> Ulubione</a>
-              <a href="/#" className="flex items-center justify-center gap-1 w-full hover:underline"><NotebookTabs size={16}/>Moje zamówienia</a>
+              <a href="/account" className="flex items-center justify-center gap-1 w-full hover:underline"><UserRound size={16}/>Moje konto</a>
+              <a href="/favorites" className="flex items-center justify-center gap-1 w-full hover:underline"><Heart size={16}/>Ulubione</a>
+              <a href="/orders" className="flex items-center justify-center gap-1 w-full hover:underline"><NotebookTabs size={16}/>Moje zamówienia</a>
+              <a href="/conservations" className="flex items-center justify-center gap-1 w-full hover:underline"><Speech size={16}/>Moje rozmowy</a>
               <button
                 onClick={handleLogout}
                 className="flex items-center justify-center gap-1 w-full text-left hover:underline"

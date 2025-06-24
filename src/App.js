@@ -14,6 +14,9 @@ import CookieConsent from './components/CookieConsent';
 import Orders from './components/Orders';
 import AdminOrders from './components/AdminOrders'
 import AdminProtectedRoute from './components/AdminProtectedRoute'
+import ConservationsMain from './Pages/ConservationsMain'
+import ConservationsDetails from './components/ConservationsDetails'
+import ProtectedChat from './components/ProtectedChat'
 
 const Layout = () => {
   return (
@@ -42,8 +45,11 @@ const Layout = () => {
           <Route path="/regulamin" element={<Regulamin />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/conservations" element={<ConservationsMain />} />
+          <Route path="/chat/:orderId" element={<ProtectedChat><ConservationsDetails /></ProtectedChat>} />
+          
+          {/* Admin routes */}
           <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
-          {/* Додайте інші маршрути за потребою */}
         </Routes>
       </main>
 
