@@ -3,7 +3,6 @@ import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import ChatWindow from "./ChatWindow";
 
 const Orders = () => {
   const [user, setUser] = useState(null);
@@ -76,10 +75,10 @@ const Orders = () => {
                 <p className="font-semibold text-pink-800">
                   Zamówienie: {order.productName}
                 </p>                 
-                <p><strong>Data:</strong> {new Date(order.date).toLocaleString()}</p>
+                <p><strong>Data:</strong> {new Date(order.createdAt?.seconds * 1000).toLocaleString("pl-PL")}</p>
                 <p><strong>Cena:</strong> {order.price} zł</p>
                 <p><strong>Uwagi:</strong> {order.notes || "-"}</p>
-                <p><strong>uId:</strong> {order.userId || "-"}</p>
+                <p><strong>Id zamówienia:</strong> {order.id || "-"}</p>
               </div>
                 <span className={`absolute rounded-md top-2 right-2 px-2 py-1 text-xs font-bold 
                     ${order.status === "zrealizowane" ? "bg-green-500 text-white" :

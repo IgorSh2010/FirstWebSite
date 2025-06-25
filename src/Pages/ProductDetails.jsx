@@ -76,9 +76,9 @@ export default function ProductDetails() {
         </p>
       </div>
       {/* Opis */}
-      <p className="flex items-start gap-2 bg-white/5 backdrop-blur-md py-1 px-2 rounded font-semibold my-4">
+      <p className="flex items-start gap-2 bg-white/5 backdrop-blur-md py-1 rounded font-semibold my-4">
         <span className="flex-shrink-0 pt-1">
-          <BookOpenText size={20} className="text-blue-700" />
+          <BookOpenText size={25} className="text-blue-700" />
         </span>
         <span className="text-sm">{product.description}</span>
       </p>

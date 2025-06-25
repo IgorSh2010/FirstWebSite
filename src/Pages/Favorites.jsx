@@ -43,30 +43,34 @@ export default function Favorites() {
           <Link to={`/productsMain/${fav.id}`} key={fav.id}
                     className={`relative transition-all duration-500 ease-in-out 
                         ${hiddenCard === fav.id ? 'opacity-0 scale-95' : 'opacity-100'}`}>  
-            <div className="bg-red-200 border p-4 rounded shadow hover:shadow-md transition max-w-xs w-full mx-auto">
-            <FavoriteButton productId={fav.id}
-                            product={fav}
-                            onUnliked={() => {
-                            setHiddenCard(fav.id); // start animation
-                            setTimeout(() => {
-                                setFavorites(favs => favs.filter(item => item.id !== fav.id));
-                                setTimeout(() => setHiddenCard(null));
-                            }, 400); // match with duration
-                            }} />          
-            {fav.imageUrl && (
-                <img
-                src={fav.imageUrl}
-                alt={fav.title}
-                className="w-full h-32 object-contain mb-2 rounded"
-                />
-            )}
-            
-            <div className="border p-2 rounded bg-pink-50 text-sm"> 
-                <p><strong>{fav.title}</strong></p>
-                <p>{fav.price} zł</p>
-            </div>
-                <div className="mt-4">
-                <OrderButton product={fav}/>
+            <div className="bg-red-200 border p-4 rounded shadow hover:shadow-md transition max-w-xs w-full mx-auto">         
+                <div className="flex justify-start items-center">
+                    {fav.imageUrl && (
+                        <img
+                        src={fav.imageUrl}
+                        alt={fav.title}
+                        className="w-full h-32 object-contain mb-2 rounded"
+                        />
+                    )}
+                
+                    <div className="border w-full p-2 rounded bg-pink-50 text-sm"> 
+                        <p><strong>{fav.title}</strong></p>
+                        <p>{fav.price} zł</p>
+                    </div>
+                </div>
+                <div className="flex justify-between mt-4">
+                    <OrderButton product={fav}/>
+
+                    <FavoriteButton productId={fav.id}
+                                    product={fav}
+                                    onUnliked={() => {
+                                    setHiddenCard(fav.id); // start animation
+                                    setTimeout(() => {
+                                        setFavorites(favs => favs.filter(item => item.id !== fav.id));
+                                        setTimeout(() => setHiddenCard(null));
+                                }, 400); // match with duration
+                                }} 
+                    /> 
                 </div>                      
             </div> 
           </Link>
