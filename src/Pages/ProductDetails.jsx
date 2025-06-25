@@ -32,7 +32,7 @@ export default function ProductDetails() {
   return (
   <>
     <div className='ml-1'><Breadcrumbs /></div>
-    <div className="md:ml-60 ml-1 bg-white/5 backdrop-blur-md p-4 max-w-3xl mx-auto">
+    <div className="md:ml-60 ml-1 bg-white/5 backdrop-blur-md p-4 max-w-4xl mx-auto">
       {product.imageUrl && (
         <a href={product.imageUrl} target="_blank" rel="noreferrer">
           <img
