@@ -81,7 +81,7 @@ const Header = () => {
     {
       "px-6 py-4 bg-cover bg-center w-full":
         isHome && !scrolled,
-      "fixed top-0 w-full bg-gray-900 text-white": scrolled || !isHome,
+      "fixed top-0 pb-3 w-full bg-gray-900 text-white": scrolled || !isHome,
     }
   );
 
@@ -246,8 +246,8 @@ const Header = () => {
 
       {/* Мобільне меню */}
       {menuOpen && (
-        <div ref={mobileMenuRef} className="md:hidden px-4 pb-4 space-y-2 bg-gray-800 text-white text-center mt-2 rounded-md">
-          <div className="flex justify-center gap-5 w-full items-center">
+        <div ref={mobileMenuRef} className="md:hidden px-4 pb-4 bg-gray-800 text-white text-center mt-2 rounded-md">
+          <div className="flex pt-2 justify-center gap-7 w-full items-center">
             <a href="/" className="hover:underline">
               Glówna
             </a>
@@ -268,7 +268,7 @@ const Header = () => {
               <a href="/conservations" className="flex items-center justify-center gap-1 w-full hover:underline"><Speech size={16}/>Moje rozmowy</a>
               <button
                 onClick={handleLogout}
-                className="flex items-center justify-center gap-1 w-full text-left hover:underline"
+                className="flex text-rose-700 font-semibold items-center justify-center gap-1 w-full text-left hover:underline"
               >
                 <LogOut size={16} />Wyloguj się
               </button>
