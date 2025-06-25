@@ -3,6 +3,7 @@ import { client } from '../sanityClient'
 import { Link } from 'react-router-dom'
 import CategoryFilter from '../components/CategoryFilter';
 import FavoriteButton from "../components/FavoriteButton";
+import { Banknote, CircleCheckBig, X } from 'lucide-react'; 
 
   const Products = () => {
   const [products, setProducts] = useState([]);
@@ -57,8 +58,22 @@ import FavoriteButton from "../components/FavoriteButton";
               <FavoriteButton productId={product._id} product={product} />
             </div>
             <p className="text-sm text-gray-600">{product.description}</p>
-            <p className="font-bold mt-2">💰 Cena: {product.price} zł.</p>
-            <p className="text-xs mt-1">{product.available ? '✅ Dostępny' : '❌ Chwilowo nie dostępny (na zamówienie)'}</p>
+            <div className='flex justify-between my-2'>
+              <p className="flex items-center gap-2 font-bold"><Banknote color="green"/>Cena: {product.price} zł.</p>
+              <p className="flex items-center gap-2 font-bold">
+                {product.available ? (
+                  <>
+                    <CircleCheckBig size={18} className='text-lime-800' />
+                    <span className='text-lime-800'>Dostępny</span>
+                  </>
+                ) : (
+                  <>
+                    <X size={18} className='text-red-500' />
+                    <span className="text-red-500">Chwilowo nie dostępny (na zamówienie)</span>
+                  </>
+                )}
+              </p>
+            </div>            
           </div>      
         </Link>))}
     </div>

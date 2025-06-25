@@ -4,6 +4,7 @@ import { client } from '../sanityClient'
 import FavoriteButton from "../components/FavoriteButton";
 import Breadcrumbs from '../components/Breadcrumbs';
 import OrderButton  from '../components/OrderButton';
+import { Banknote, CircleCheckBig, X, BookOpenText } from 'lucide-react'; 
 
 export default function ProductDetails() {
   const { id } = useParams()
@@ -45,11 +46,25 @@ export default function ProductDetails() {
         <h2 className="text-3xl font-extrabold text-pink-700">{product.title}</h2>
         <FavoriteButton productId={id} product={product} />
       </div>
-      <div className="flex items-center gap-4 mt-4">
-        <p className="text-xl font-semibold">💰 Cena: {product.price} zł.</p>
-        <p className="text-sm">{product.available ? '✅ Dostępny' : '❌ Chwilowo nie dostępny (na zamówienie)'}</p>
+      <div className="flex items-center justify-between gap-4 mt-4">
+        <p className="flex items-center gap-2 text-xl font-semibold"><Banknote size={32} color="green" />Cena: {product.price} zł. </p>
+        <p className="flex items-center gap-2 font-semibold bg-white/5 backdrop-blur-md px-2 py-1 rounded">
+          {product.available ? (
+            <>
+              <CircleCheckBig size={18} className='text-lime-800' />
+              <span className='text-lime-800'>Dostępny</span>
+            </>
+          ) : (
+            <>
+              <X size={18} className='text-red-500' />
+              <span className="text-red-500">Chwilowo nie dostępny (na zamówienie)</span>
+            </>
+          )}
+        </p>
       </div>
-      <p className="font-semibold mt-2">📌 Opis: {product.description}</p>
+      <p className="flex items-center gap-2 bg-white/5 backdrop-blur-md py-1 rounded font-semibold my-4">
+        <BookOpenText size={32} color='blue'/>Opis: {product.description}
+      </p>
 
       <OrderButton product={product} />
       
