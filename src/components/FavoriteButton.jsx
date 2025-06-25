@@ -71,7 +71,7 @@ const FavoriteButton = ({ productId, product, onUnliked }) => {
         e.preventDefault();  // ⛔ Зупиняє <Link>
         handleLike();
       }}
-      className = {'ml-auto'}
+      className = {'w-10 h-8 flex-shrink-0 ml-auto'}
       title = {ttl}
     >
       <img

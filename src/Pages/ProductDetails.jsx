@@ -46,24 +46,41 @@ export default function ProductDetails() {
         <h2 className="text-3xl font-extrabold text-pink-700">{product.title}</h2>
         <FavoriteButton productId={id} product={product} />
       </div>
-      <div className="flex items-center justify-between gap-4 mt-4">
-        <p className="flex items-center gap-2 text-xl font-semibold"><Banknote size={32} color="green" />Cena: {product.price} zł. </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-4">
+  
+        {/* Cena */}
+        <p className="flex items-center gap-2 text-xl font-semibold">
+          <span className="flex-shrink-0">
+            <Banknote size={24} className="text-green-700" />
+          </span>
+          <span>Cena: {product.price} zł</span>
+        </p>
+
+        {/* Dostępność */}
         <p className="flex items-center gap-2 font-semibold bg-white/5 backdrop-blur-md px-2 py-1 rounded">
           {product.available ? (
             <>
-              <CircleCheckBig size={18} className='text-lime-800' />
-              <span className='text-lime-800'>Dostępny</span>
+              <span className="flex-shrink-0">
+                <CircleCheckBig size={20} className="text-lime-800" />
+              </span>
+              <span className="text-lime-800">Dostępny</span>
             </>
           ) : (
             <>
-              <X size={18} className='text-red-500' />
+              <span className="flex-shrink-0">
+                <X size={20} className="text-red-500" />
+              </span>
               <span className="text-red-500">Chwilowo nie dostępny (na zamówienie)</span>
             </>
           )}
         </p>
       </div>
-      <p className="flex items-center gap-2 bg-white/5 backdrop-blur-md py-1 rounded font-semibold my-4">
-        <BookOpenText size={32} color='blue'/>Opis: {product.description}
+      {/* Opis */}
+      <p className="flex items-start gap-2 bg-white/5 backdrop-blur-md py-1 px-2 rounded font-semibold my-4">
+        <span className="flex-shrink-0 pt-1">
+          <BookOpenText size={20} className="text-blue-700" />
+        </span>
+        <span className="text-sm">{product.description}</span>
       </p>
 
       <OrderButton product={product} />
