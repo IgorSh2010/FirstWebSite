@@ -1,11 +1,12 @@
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import classNames from "classnames";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { collection, onSnapshot, getDocs } from "firebase/firestore";
 import OrderModal from "./OrderModal";
 import { getUserRole } from "../Utils/roles";
-import { Speech, UserRound, Heart, LogOut, NotebookTabs } from "lucide-react";
+import { Speech, UserRound, Heart, LogOut, NotebookTabs, MessageCircle } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const Header = () => {
   const mobileMenuRef = useRef(null);
   const [orderModalOpen, setOrderModalOpen] = useState(false);
   const [userRole, setUserRole] = useState("user");
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -84,6 +86,29 @@ const Header = () => {
       "fixed top-0 pb-3 w-full bg-gray-900 text-white": scrolled || !isHome,
     }
   );
+
+  useEffect(() => {
+    if (!user) {
+      setUnreadCount(0);
+    return;
+   }
+
+    const q = collection(db, "orders");
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      const unreadCounts = await Promise.all(
+        snapshot.docs.map(async (docSnap) => {
+          const messagesSnap = await getDocs(collection(db, "orders", docSnap.id, "messages"));
+          return messagesSnap.docs.reduce((count, msg) => {
+            const data = msg.data();
+            return count + (!data.readByUser || !data.readByAdmin ? 1 : 0);
+          }, 0);
+        })
+      );
+      setUnreadCount(unreadCounts.reduce((a, b) => a + b, 0));
+    });
+
+  return () => unsubscribe();
+  }, [user]);
 
   return (
     <header
@@ -208,9 +233,14 @@ const Header = () => {
                     <a href="/orders" className="flex items-center gap-1 w-full px-4 py-2 hover:bg-pink-100">
                     <NotebookTabs size={16} color="green"/>Moje zamówienia</a>
                   </li>
-                  <li>
-                    <a href="/conservations" className="flex items-center gap-1 w-full px-4 py-2 hover:bg-pink-100">
-                    <Speech size={16} color="blue"/>Moje rozmowy</a>
+                  <li> 
+                    <a href="/conservations" className="relative flex items-center gap-2 w-full px-4 py-2 hover:bg-pink-100"> 
+                      <Speech size={16} color="blue" /> Moje rozmowy 
+                          {unreadCount > 0 && 
+                             (<span className="absolute right-4 content-between bg-red-600 text-white text-sm font-bold shadow-lg rounded-xl w-8 h-8 flex items-center justify-center animate-pulse"> 
+                                <MessageCircle size={16}/> {unreadCount} 
+                              </span> )} 
+                    </a> 
                   </li>
                   <li>
                     <button
@@ -265,7 +295,14 @@ const Header = () => {
               <a href="/account" className="flex items-center justify-center gap-1 w-full hover:underline"><UserRound size={16}/>Moje konto</a>
               <a href="/favorites" className="flex items-center justify-center gap-1 w-full hover:underline"><Heart size={16}/>Ulubione</a>
               <a href="/orders" className="flex items-center justify-center gap-1 w-full hover:underline"><NotebookTabs size={16}/>Moje zamówienia</a>
-              <a href="/conservations" className="flex items-center justify-center gap-1 w-full hover:underline"><Speech size={16}/>Moje rozmowy</a>
+              <a href="/conservations" className="relative flex items-center justify-center gap-1 w-full hover:underline">
+                <Speech size={16}/>Moje rozmowy
+                      {unreadCount > 0 && ( 
+                        <span className="absolute right-4 content-between bg-red-600 text-white text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center animate-pulse">
+                           <MessageCircle size={16}/>{unreadCount} 
+                        </span> 
+                      )}
+              </a>
               <button
                 onClick={handleLogout}
                 className="flex text-rose-700 font-semibold items-center justify-center gap-1 w-full text-left hover:underline"
@@ -274,10 +311,10 @@ const Header = () => {
               </button>
             </div>
           ) : (
-            <>
+            <div className="my-2 space-y-2">
               <a href="/login" className="block hover:underline">Zaloguj</a>
               <a href="/register" className="block hover:underline">Zarejestruj</a>
-            </>
+            </div>
           )}
         </div>
       )}

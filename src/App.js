@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/HeaderNew'
 import Home from './Pages/Home'
@@ -19,6 +18,7 @@ import ConservationsDetails from './components/ConservationsDetails'
 import ProtectedChat from './components/ProtectedChat'
 
 const Layout = () => {
+  
   return (
     <div className="min-h-screen flex flex-col">    
       {/* HEADER */}
@@ -33,7 +33,7 @@ const Layout = () => {
       <div className="flex flex-1">
 
       {/* Routing */}
-      <main className="md:pt-16 flex-1 p-4 pt-32 bg-fixed w-full" style={{ backgroundImage: "url('/vyazanie-kryuchkom-8.jpg')" }}>
+      <main className="md:pt-16 flex-1 p-4 pt-32 bg-cover bg-center bg-no-repeat bg-fixed w-full" style={{ backgroundImage: "url('/vyazanie-kryuchkom-8.jpg')" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productsMain" element={<Products />} />

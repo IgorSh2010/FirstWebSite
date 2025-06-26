@@ -26,7 +26,7 @@ export const createOrder = async (orderData, product = null) => {
   };
 
   const orderRefGl = await addDoc(collection(db, "orders"), fullOrder);
-  //console.log("Order added with ID:", orderRef.id);
+  //console.log("Order added with ID:", orderRefGl.id);
 
   //if (user?.uid) {
    const orderRefUser = await setDoc(doc(db, "users", user.uid, "userOrders", orderRefGl.id || product), fullOrder);

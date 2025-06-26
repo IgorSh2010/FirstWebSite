@@ -7,6 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 const ConversationsList = () => {
   const [conversations, setConversations] = useState([]);
+  const [unreadPerOrder, setUnreadPerOrder] = useState({});
   const [role, setRole] = useState("user");
   const [user, setUser] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
@@ -16,43 +17,55 @@ const ConversationsList = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
-        const userRole = await getUserRole(currentUser.uid);
-        setRole(userRole);
-
-        let q;
-        if (role === "admin") {
-          q = collection(db, "orders");
+          const userRole = await getUserRole(currentUser.uid);
+          setUser(currentUser);
+          setRole(userRole);
         } else {
-          q = query(collection(db, "orders"), where("userId", "==", currentUser.uid));
+          setUser(null);
+          setRole("user");
         }
+    });
+    return () => unsubscribe();
+  }, []);
 
-        const unsubscribeSnapshot = onSnapshot(q, async (snapshot) => {
-          const items = [];
-          for (const docSnap of snapshot.docs) {
-            const order = { id: docSnap.id, ...docSnap.data() };
+  useEffect(() => {
+    if (!user) return;
 
-            const messagesSnap = await getDocs(collection(db, "orders", order.id, "messages"));
-            const hasUnread = messagesSnap.docs.some(msg => {
-              const data = msg.data();
-              return role === "admin" ? !data.readByAdmin && data.sender === "user" : !data.readByUser && data.sender === "admin";
-            });
+    let q;
+    if (role === "admin") {
+      q = collection(db, "orders");
+    } else {
+      q = query(collection(db, "orders"), where("userId", "==", user.uid));
+    }
 
-            items.push({ ...order, hasUnread });
-          }
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      const items = [];
+      const unreadCountsObj = {};
 
-          items.sort((a, b) => (b.hasUnread ? 1 : 0) - (a.hasUnread ? 1 : 0));
-          setConversations(items);
-        });
+      for (const docSnap of snapshot.docs) {
+        const order = { id: docSnap.id, ...docSnap.data() };
 
-        return () => unsubscribeSnapshot();
-      } else {
-        setUser(null);
+        const messagesSnap = await getDocs(collection(db, "orders", order.id, "messages"));
+        const unreadCount = messagesSnap.docs.reduce((count, msg) => {
+          const data = msg.data();
+          const isUnread = role === "admin"
+            ? !data.readByAdmin && data.sender === "user"
+            : !data.readByUser && data.sender === "admin";
+          return count + (isUnread ? 1 : 0);
+        }, 0);
+
+        unreadCountsObj[order.id] = unreadCount;
+        items.push(order);
       }
+
+      items.sort((a, b) => (unreadCountsObj[b.id] ? 1 : 0) - (unreadCountsObj[a.id] ? 1 : 0));
+
+      setConversations(items);
+      setUnreadPerOrder(unreadCountsObj);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user, role]);  
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -67,7 +80,7 @@ const ConversationsList = () => {
   if (user === null) return <p className="p-6 text-center">Musisz być zalogowany, aby zobaczyć rozmowy.</p>;
 
   return (
-    <div ref={containerRef} className="max-w-3xl mx-auto mt-20 p-4 bg-white/50 backdrop-blur-lg rounded shadow">
+    <div ref={containerRef} className="max-w-5xl mx-auto mt-2 p-4 bg-white/50 backdrop-blur-lg rounded shadow">
       {conversations.length === 0 ? (
         <p className="text-gray-600">Brak rozmów.</p>
       ) : (
@@ -82,7 +95,11 @@ const ConversationsList = () => {
                   <p className="font-semibold">{conv.productName || "Nieokreślony produkt"}</p>
                   <p className="text-sm text-gray-600">Zamówienie: {conv.id}</p>
                 </div>
-                {conv.hasUnread && <span className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>}
+                {unreadPerOrder[conv.id]&&
+                  <div className="flex items-center gap-2 space-x-2 text-red-600 animate-pulse">
+                     <span className="w-3 h-3 bg-red-500 rounded-full"></span>
+                     {unreadPerOrder[conv.id]}
+                  </div>}   
               </div>
 
               <div

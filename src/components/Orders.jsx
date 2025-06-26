@@ -50,7 +50,7 @@ const Orders = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-20 bg-white shadow-lg rounded-lg p-6">
+    <div className="max-w-5xl mx-auto mt-20 bg-white shadow-lg rounded-lg p-6">
       <h1 className="text-3xl font-bold text-pink-700 mb-6 text-center">
         Historia zamówień
       </h1>
