@@ -6,7 +6,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
 import OrderModal from "./OrderModal";
 import { getUserRole } from "../Utils/roles";
-import { Speech, UserRound, Heart, LogOut, NotebookTabs, MessageCircle } from "lucide-react";
+import { Speech, UserRound, Heart, LogOut, NotebookTabs, MessageCircle, ShoppingCart } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -209,10 +209,16 @@ const Header = () => {
           <div ref={dropdownRef} className="relative hidden md:flex items-center space-x-4">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center space-x-2 bg-pink-600 px-3 py-1 rounded hover:bg-pink-700"
+              className="flex items-center space-x-2 bg-pink-500 px-3 py-1 rounded hover:bg-pink-700"
             >
               <span>{user.email.split("@")[0]}</span>
               <span>▼</span>
+              {unreadCount > 0 &&
+                <div>               
+                  <span className="absolute -right-2 -top-2 w-5 h-5 bg-red-500 rounded-full animate-ping opacity-60"></span>
+                  <span className="absolute -right-1 -top-1 w-3 h-3 bg-red-600 rounded-full"></span>
+                </div>
+              }
             </button>
 
             {dropdownOpen && (
@@ -312,8 +318,8 @@ const Header = () => {
             </div>
           ) : (
             <div className="my-2 space-y-2">
-              <a href="/login" className="block hover:underline">Zaloguj</a>
-              <a href="/register" className="block hover:underline">Zarejestruj</a>
+              <a href="/login" className="my-2 block hover:underline">Zaloguj</a>
+              <a href="/register" className="my-2 block hover:underline">Zarejestruj</a>
             </div>
           )}
         </div>

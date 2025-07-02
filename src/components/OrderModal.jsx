@@ -3,6 +3,7 @@ import { createOrder } from "../Servises/orderService";
 import Modal from "./Modal";
 import { getDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import { sendMail } from "../Servises/SendMail"; // Assuming you have a sendMail function
 
 const OrderModal = ({ product = null , onClose }) => {
   
@@ -39,6 +40,11 @@ const OrderModal = ({ product = null , onClose }) => {
         
     try {
       await createOrder(formData, product);
+      await sendMail(
+        formData.email,
+        `Potwierdzenie zamówienia ${product.name}`,
+        `Dziękujemy za zamówienie ${product.name}. Skontaktujemy się wkrótce.`,
+        );
         setmodalMessage("Twoje zamówienie zostało wysłane i zapisane do bazy!");
     } catch (error) {
         setmodalMessage("Błąd podczas zapisu zamówienia. ", error);

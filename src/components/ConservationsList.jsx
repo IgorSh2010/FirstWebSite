@@ -91,9 +91,9 @@ const ConversationsList = () => {
                 className="flex items-center justify-between bg-pink-100 p-3 rounded shadow hover:shadow-md transition cursor-pointer"
                 onClick={() => setExpandedId(expandedId === conv.id ? null : conv.id)}
               >
-                <div>
-                  <p className="font-semibold">{conv.productName || "Nieokreślony produkt"}</p>
-                  <p className="text-sm text-gray-600">Zamówienie: {conv.id}</p>
+                <div>                  
+                  <p className="font-semibold">ID zamówienia: {conv.id}</p>
+                  <p className="text-sm">Status: {conv.status}</p>
                 </div>
                 {unreadPerOrder[conv.id]&&
                   <div className="flex items-center gap-2 space-x-2 text-red-600 animate-pulse">
@@ -108,7 +108,7 @@ const ConversationsList = () => {
                 }`}
               >
                 <div className="p-4 bg-white shadow rounded text-sm">
-                  <p><strong>Status:</strong> {conv.status}</p>
+                  <p className="font-semibold  text-gray-600">{conv.productName || "Nieokreślony produkt"}</p>
                   <p><strong>Uwagi:</strong> {conv.notes || "-"}</p>
                   <button
                     onClick={() => navigate(`/chat/${conv.id}`)}
