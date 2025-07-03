@@ -18,7 +18,7 @@ export default async (req, res) => {
 
   try {
     const result = await resend.emails.send({
-      from: 'lika.shepetko@gmail.com', //'noreply@ls-studio.top',  // або будь-який верифікований e-mail у Resend
+      from: 'noreply@ls-studio.top', //'noreply@ls-studio.top',  // або будь-який верифікований e-mail у Resend
       to,
       subject,
       text,
