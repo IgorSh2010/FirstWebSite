@@ -2,6 +2,7 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
 
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,7 +19,7 @@ export default async (req, res) => {
 
   try {
     const result = await resend.emails.send({
-      from: 'noreply@ls-studio.top', //'noreply@ls-studio.top',  // або будь-який верифікований e-mail у Resend
+      from: 'lika.shepetko@gmail.com', //'noreply@ls-studio.top',  // або будь-який верифікований e-mail у Resend
       to,
       subject,
       text,
