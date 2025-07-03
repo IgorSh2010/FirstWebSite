@@ -33,7 +33,8 @@ const Layout = () => {
       <div className="flex flex-1">
 
       {/* Routing */}
-      <main className="md:pt-16 flex-1 p-4 pt-32 bg-cover bg-center bg-no-repeat bg-fixed w-full" style={{ backgroundImage: "url('/vyazanie-kryuchkom-8.jpg')" }}>
+      <main className="md:p-4 flex-1 bg-cover bg-center bg-no-repeat bg-fixed w-full" 
+            style={{ backgroundImage: "url('/vyazanie-kryuchkom-8.jpg')" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productsMain" element={<Products />} />

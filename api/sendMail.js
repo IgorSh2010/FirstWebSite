@@ -1,46 +1,33 @@
-import sgMail from "@sendgrid/mail";
+import { Resend } from 'resend';
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const allowedOrigins = ["http://localhost:3000", "https://ls-studio.vercel.app"];
+export default async (req, res) => {
 
-export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
-  const origin = req.headers.origin;
-
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Only POST allowed' });
   }
 
   const { to, subject, text } = req.body;
 
   if (!to || !subject || !text) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return res.status(400).json({ message: 'Missing fields' });
   }
-
-  const msg = {
-    to,
-    from: "noreply@ls-studio.vercel.app", // Можеш змінити на свою доменну пошту, якщо вона підтверджена у SendGrid
-    subject,
-    text,
-  };
 
   try {
-    await sgMail.send(msg);
-    return res.status(200).json({ success: true });
+    const result = await resend.emails.send({
+      from: 'noreply@ls-studio.pl',  // або будь-який верифікований e-mail у Resend
+      to,
+      subject,
+      text,
+    });
+
+    console.log('Email sent:', result);
+    res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Email send error:", error);
-    return res.status(500).json({ error: "Email send failed" });
+    console.error('Send error:', error);
+    res.status(500).json({ message: 'Send failed' });
   }
-}
+};
