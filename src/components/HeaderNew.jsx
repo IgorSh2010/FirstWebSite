@@ -87,6 +87,14 @@ const Header = () => {
     }
   );
 
+  const headerClassCart = classNames(
+    "relative",
+    {
+      "text-gray-700 hover:text-gray-500": isHome && !scrolled,
+      "text-pink-700 hover:text-pink-500": scrolled || !isHome,
+    }
+  );
+
   useEffect(() => {
     if (!user) {
       setUnreadCount(0);
@@ -193,6 +201,13 @@ const Header = () => {
             {userRole === "admin" && (
             <a href="/admin/orders" className=" bg-gray-700  hover:bg-gray-400 px-3 py-1 rounded text-white hover:text-pink-700 font-bold">⚙ Admin Panel</a>
             )}
+
+            {/* Кнопка кошика */}
+            {user ? (
+              <Link to="/cart" className={headerClassCart}>
+                <ShoppingCart size={32} />
+              </Link>
+            ) : ("")}    
 
             {/* Кнопка мобільного меню */}
             <button

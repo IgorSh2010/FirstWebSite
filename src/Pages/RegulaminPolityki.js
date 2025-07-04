@@ -3,7 +3,7 @@ import Breadcrumbs from '../components/Breadcrumbs'
 function Regulamin() {
   return (
     <>
-    <div className='ml-1 p-2 w-full'><Breadcrumbs /></div>
+    <div className='ml-1'><Breadcrumbs /></div>
     <section className="ml-1 p-4 max-w-5xl mx-auto backdrop-blur-sm bg-pink-300/60 rounded-md">      
       <h1 className="text-2xl text-center font-semibold mb-4">
         REGULAMIN WITRYNY INTERNETOWEJ <strong>LS Studio</strong>.

@@ -12,6 +12,9 @@ const Breadcrumbs = () => {
     'favorites': 'Ulubione',
     'products': 'Produkty',
     'cart': 'Koszyk',
+    'conservations' : 'Moje rozmowy',
+    'orders': 'Moje zamówienia',
+    'regulamin': 'Regulamin i polityka prywatności',
     // додай інші за потребою
   };
 
@@ -29,7 +32,7 @@ const Breadcrumbs = () => {
   }, [location.pathname]);
 
   return (
-    <nav className="text-sm text-gray-600 mt-4 mb-1 p-4">
+    <nav className="text-sm text-gray-600 mt-20 mb-1">
       <ol className="list-reset flex">
         <li>
           <Link to="/" className="text-blue-600 hover:underline">

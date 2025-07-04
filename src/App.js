@@ -9,17 +9,19 @@ import Register from './Pages/Register'
 import Account from './Pages/Account'
 import Regulamin from './Pages/RegulaminPolityki'
 import Favorites from './Pages/Favorites'
+import ConservationsMain from './Pages/ConservationsMain'
+import CartPage from './Pages/CartPage'
 import CookieConsent from './components/CookieConsent';
 import Orders from './components/Orders';
 import AdminOrders from './components/AdminOrders'
 import AdminProtectedRoute from './components/AdminProtectedRoute'
-import ConservationsMain from './Pages/ConservationsMain'
 import ConservationsDetails from './components/ConservationsDetails'
 import ProtectedChat from './components/ProtectedChat'
+import { CartProvider } from "./context/CartContext";
 
 const Layout = () => {
   
-  return (
+  return (    
     <div className="min-h-screen flex flex-col">    
       {/* HEADER */}
       <header> <Header /> </header>
@@ -46,6 +48,7 @@ const Layout = () => {
           <Route path="/regulamin" element={<Regulamin />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/conservations" element={<ConservationsMain />} />
           <Route path="/chat/:orderId" element={<ProtectedChat><ConservationsDetails /></ProtectedChat>} />
           
@@ -77,6 +80,7 @@ const Layout = () => {
 
 function App() {
   return (
+    <CartProvider>
       <Router>
         <Layout />
         <CookieConsent />
@@ -86,6 +90,7 @@ function App() {
           &copy; {new Date().getFullYear()} LS STUDIO. Wszelkie prawa zastrzeżone.
         </footer>
       </Router>
+    </CartProvider>
   )
 }
 

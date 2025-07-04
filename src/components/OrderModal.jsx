@@ -40,11 +40,13 @@ const OrderModal = ({ product = null , onClose }) => {
         
     try {
       await createOrder(formData, product);
-      await sendMail(
-        formData.email,
-        `Potwierdzenie zamówienia ${product.name}`,
-        `Dziękujemy za zamówienie ${product.name}. Skontaktujemy się wkrótce.`,
-        );
+
+      //Висилання мейла поки заморозимо до того часу, коли будемо мати свій власний домен
+      // await sendMail(
+      //   formData.email,
+      //   `Potwierdzenie zamówienia ${product.name}`,
+      //   `Dziękujemy za zamówienie ${product.name}. Skontaktujemy się wkrótce.`,
+      //   );
         setmodalMessage("Twoje zamówienie zostało wysłane i zapisane do bazy!");
     } catch (error) {
         setmodalMessage("Błąd podczas zapisu zamówienia. ", error);

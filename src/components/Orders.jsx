@@ -3,6 +3,7 @@ import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const Orders = () => {
   const [user, setUser] = useState(null);
@@ -50,7 +51,10 @@ const Orders = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto mt-20 bg-white shadow-lg rounded-lg p-6">
+    <>
+    <div className='ml-1'><Breadcrumbs /></div>
+
+    <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-6">
       <h1 className="text-3xl font-bold text-pink-700 mb-6 text-center">
         Historia zamówień
       </h1>
@@ -100,6 +104,7 @@ const Orders = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

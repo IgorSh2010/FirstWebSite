@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom'
 import { client } from '../sanityClient'
 import FavoriteButton from "../components/FavoriteButton";
 import Breadcrumbs from '../components/Breadcrumbs';
-import OrderButton  from '../components/OrderButton';
+//import OrderButton  from '../components/OrderButton';
 import { Banknote, CircleCheckBig, X, BookOpenText } from 'lucide-react'; 
+import ToCartButton from '../components/ToCartButton';
 
 export default function ProductDetails() {
   const { id } = useParams()
@@ -83,8 +84,8 @@ export default function ProductDetails() {
         <span className="text-sm">{product.description}</span>
       </p>
 
-      <OrderButton product={product} />
-      
+      {/* <OrderButton product={product} /> */}
+      <ToCartButton product={product} />
     </div>
   </>
   )
