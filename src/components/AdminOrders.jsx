@@ -50,7 +50,7 @@ const AdminOrders = () => {
     <>
     <div className='ml-1'><Breadcrumbs /></div>
 
-    <div className="max-w-6xl mx-auto mt-24 p-6 bg-white/50 backdrop-blur-md shadow-xl rounded-xl">
+    <div className="max-w-6xl mx-auto mt-4 p-6 bg-white/50 backdrop-blur-md shadow-xl rounded-xl">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-3 gap-4">
         <h1 className="text-2xl font-bold text-pink-700">📦 Panel zamówień (Admin)</h1>
         <button
