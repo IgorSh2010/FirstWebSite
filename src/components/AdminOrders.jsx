@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { ArrowDownUp, Pencil } from "lucide-react";
+import Breadcrumbs from "./Breadcrumbs";
 
 const statusColors = {
   "Nowe": "bg-yellow-100 border-yellow-400",
@@ -46,6 +47,9 @@ const AdminOrders = () => {
   });
 
   return (
+    <>
+    <div className='ml-1'><Breadcrumbs /></div>
+
     <div className="max-w-6xl mx-auto mt-24 p-6 bg-white/50 backdrop-blur-md shadow-xl rounded-xl">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-3 gap-4">
         <h1 className="text-2xl font-bold text-pink-700">📦 Panel zamówień (Admin)</h1>
@@ -136,6 +140,7 @@ const AdminOrders = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
