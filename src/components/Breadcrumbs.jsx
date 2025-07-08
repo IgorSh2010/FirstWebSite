@@ -32,6 +32,7 @@ const Breadcrumbs = () => {
   }, [location.pathname]);
 
   return (
+    <div className="mt-16 md:mt-4">
     <nav className="text-sm text-gray-600 mt-20 mb-1">
       <ol className="list-reset flex">
         <li>
@@ -61,6 +62,7 @@ const Breadcrumbs = () => {
         })}
       </ol>
     </nav>
+    </div>
   );
 };
 
