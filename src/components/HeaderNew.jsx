@@ -5,8 +5,9 @@ import { auth, db } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
 import OrderModal from "./OrderModal";
+import CartPreview from "./CartPreview";
 import { getUserRole } from "../Utils/roles";
-import { Speech, UserRound, Heart, LogOut, NotebookTabs, MessageCircle, ShoppingCart } from "lucide-react";
+import { Speech, UserRound, Heart, LogOut, NotebookTabs, MessageCircle } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -84,14 +85,6 @@ const Header = () => {
       "px-6 py-4 bg-cover bg-center w-full":
         isHome && !scrolled,
       "fixed top-0 pb-3 w-full bg-gray-900 text-white": scrolled || !isHome,
-    }
-  );
-
-  const headerClassCart = classNames(
-    "relative",
-    {
-      "text-gray-700 hover:text-gray-500": isHome && !scrolled,
-      "text-pink-700 hover:text-pink-500": scrolled || !isHome,
     }
   );
 
@@ -204,10 +197,10 @@ const Header = () => {
 
             {/* Кнопка кошика */}
             {user ? (
-              <Link to="/cart" className={headerClassCart}>
-                <ShoppingCart size={32} />
-              </Link>
-            ) : ("")}    
+              <div className="relative">
+                <CartPreview />
+              </div>
+            ) : ("")} 
 
             {/* Кнопка мобільного меню */}
             <button

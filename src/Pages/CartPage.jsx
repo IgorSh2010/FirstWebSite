@@ -1,10 +1,9 @@
 import { useCart } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
 import Breadcrumbs from '../components/Breadcrumbs';
+import OrderButton  from '../components/OrderButton';
 
 const CartPage = () => {
   const { cartItems, removeFromCart, clearCart } = useCart();
-  const navigate = useNavigate();
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -19,7 +18,11 @@ const CartPage = () => {
       ) : (
         <>
           {cartItems.map((item) => (
-            <div key={item.id} className="flex justify-between items-center mb-2">
+            <div key={item.id} className="flex justify-between items-center mb-2 shadow-lg">
+              <img
+                src={item.imageUrl}
+                alt={item.title}
+                className="w-16 h-16 object-contain rounded mr-4 transition-transform duration-300 transform hover:scale-150"></img>
               <span>{item.title} x {item.quantity}</span>
               <span>{item.price * item.quantity} zł</span>
               <button onClick={() => removeFromCart(item.id)} className="text-red-500">Usuń</button>
@@ -27,12 +30,8 @@ const CartPage = () => {
           ))}
           <hr className="my-4" />
           <p><strong>Suma:</strong> {total} zł</p>
-          <button
-            className="mt-4 bg-pink-600 text-white px-4 py-2 rounded"
-            onClick={() => navigate("/checkout")}
-          >
-            Zamów
-          </button>
+
+          <OrderButton products={cartItems} onOrderComplete={clearCart} />
         </>
       )}
     </div>

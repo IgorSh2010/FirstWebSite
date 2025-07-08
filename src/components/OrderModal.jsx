@@ -3,9 +3,9 @@ import { createOrder } from "../Servises/orderService";
 import Modal from "./Modal";
 import { getDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase";
-import { sendMail } from "../Servises/SendMail"; // Assuming you have a sendMail function
+//import { sendMail } from "../Servises/SendMail"; // Assuming you have a sendMail function
 
-const OrderModal = ({ product = null , onClose }) => {
+const OrderModal = ({ products, onClose, onSuccess }) => {
   
   const [formData, setFormData] = useState({
     name: "",
@@ -39,7 +39,7 @@ const OrderModal = ({ product = null , onClose }) => {
   const handleSubmit = async (e) => {
         
     try {
-      await createOrder(formData, product);
+      await createOrder(formData, products);
 
       //Висилання мейла поки заморозимо до того часу, коли будемо мати свій власний домен
       // await sendMail(
@@ -48,6 +48,7 @@ const OrderModal = ({ product = null , onClose }) => {
       //   `Dziękujemy za zamówienie ${product.name}. Skontaktujemy się wkrótce.`,
       //   );
         setmodalMessage("Twoje zamówienie zostało wysłane i zapisane do bazy!");
+        if (onSuccess) onSuccess();
     } catch (error) {
         setmodalMessage("Błąd podczas zapisu zamówienia. ", error);
     }
@@ -90,7 +91,10 @@ const OrderModal = ({ product = null , onClose }) => {
             >
                 Wyślij zamówienie
             </button>
-            <button onClick= {(e) => {e.stopPropagation(); e.preventDefault(); onClose()}} className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 w-full">
+            <button 
+                onClick= {(e) => {e.stopPropagation(); e.preventDefault(); onClose()}}
+                type="button"
+                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 w-full">
                 Zamknij
             </button> 
           </div>

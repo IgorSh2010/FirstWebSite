@@ -1,26 +1,29 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import OrderModal from "./OrderModal";
 
-const OrderButton = ({ product }) => {
-  const [orderModalOpen, setOrderModalOpen] = useState(false);
-  const dropdownRef = useRef(null);
+const OrderButton = ({ products, onOrderComplete }) => {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div ref={dropdownRef} className="relative text-left flex items-center space-x-4">
+    <>
       <button
-        onClick={(e) => {e.stopPropagation(); e.preventDefault(); setOrderModalOpen(true)}}
-        className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-pink-700 text-sm md:text-base"
+        onClick={() => setOpen(true)}
+        className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 mt-4"
       >
-        <span>Zamów</span>
+        Zamów
       </button>
 
-      {orderModalOpen && (
+      {open && (
         <OrderModal
-          product={product}
-          onClose={() => setOrderModalOpen(false)}
+          products={products}
+          onClose={() => setOpen(false)}
+          onSuccess={() => {
+            setOpen(false);
+            if (onOrderComplete) onOrderComplete();
+          }}
         />
       )}
-    </div>
+    </>
   );
 };
 

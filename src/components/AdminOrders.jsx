@@ -18,6 +18,8 @@ const AdminOrders = () => {
   const [sortDesc, setSortDesc] = useState(true);
   const navigate = useNavigate();
 
+  const [expandedId, setExpandedId] = useState(null);
+
   const fetchOrders = async () => {
     const snapshot = await getDocs(collection(db, "orders"));
     const allOrders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -79,9 +81,30 @@ const AdminOrders = () => {
                 <p><strong className="text-pink-700">🆔 ID:</strong> {order.id}</p>
                 <p><strong className="text-pink-700">👤 Klient:</strong> {order.name} ({order.email})</p>
                 <p><strong className="text-pink-700">📞 Nr telefonu:</strong> {order.userPhone}</p>
-                <p><strong className="text-pink-700">🎁 Produkt:</strong> {order.productName}</p>
-                <p><strong className="text-pink-700">💰 Cena:</strong> {order.price} zł</p>
                 <p><strong className="text-pink-700">📝 Uwagi:</strong> {order.notes}</p>
+
+                <button
+                  onClick={() => setExpandedId(expandedId === order.id ? null : order.id)}
+                  className="text-sm text-pink-700 hover:underline"
+                >
+                  {expandedId === order.id ? "Ukryj szczegóły" : "Pokaż szczegóły"}
+                </button>
+
+                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${expandedId === order.id ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0"}`}>
+                  <div className="bg-white rounded border border-pink-100 shadow-inner p-2 mt-2">
+                    <h4 className="text-pink-700 font-semibold mb-2">Produkty:</h4>
+                    {order.products?.length > 0 ? (
+                      order.products.map((prod, idx) => (
+                        <div key={idx} className="flex justify-between text-sm border-b py-1">
+                          <span>{prod.productName}</span>
+                          <span>{prod.quantity} x {prod.price} zł = <strong>{prod.price * prod.quantity} zł</strong></span>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm">🎁 {order.productName} — {order.price} zł</p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="flex flex-col gap-2 w-full md:w-56">

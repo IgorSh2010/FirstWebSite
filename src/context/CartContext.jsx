@@ -1,15 +1,24 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { db, auth } from "../firebase";
-import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
+import { doc, setDoc, onSnapshot } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 export const CartContext = createContext();
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-  const user = auth.currentUser;
+  const [user, setUser] = useState(null);
 
-  // Слухач Firestore
+  // Підписка на auth
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsub();
+  }, []);
+
+  // Слухач Firestore --> Підписка на carts/{uid}
   useEffect(() => {
     if (!user) {
       setCartItems([]);
@@ -17,10 +26,14 @@ export const CartProvider = ({ children }) => {
     }
 
     const cartRef = doc(db, "carts", user.uid);
-
     const unsubscribe = onSnapshot(cartRef, (docSnap) => {
       if (docSnap.exists()) {
-        setCartItems(docSnap.data().items || []);
+        const data = docSnap.data();
+        if (Array.isArray(data.items)) {
+          setCartItems(data.items);
+        } else {
+          setCartItems([]);
+        }
       } else {
         setCartItems([]);
       }
@@ -31,22 +44,32 @@ export const CartProvider = ({ children }) => {
 
   const saveCart = async (newItems) => {
     if (!user) return;
-    const cartRef = doc(db, "carts", user.uid);
-    await setDoc(cartRef, {
+    await setDoc(doc(db, "carts", user.uid), {
       items: newItems,
       updatedAt: new Date(),
     });
   };
 
   const addToCart = (product) => {
-    const exists = cartItems.find((item) => item.id === product.id);
+    const exists = cartItems.find((item) => item.id === product._id);
     let updated;
     if (exists) {
       updated = cartItems.map((item) =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        item.id === product._id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       );
     } else {
-      updated = [...cartItems, { ...product, quantity: 1 }];
+      updated = [
+        ...cartItems,
+        {
+          id: product._id,
+          imageUrl: product.imageUrl || product.image, 
+          title: product.title,
+          price: product.price,
+          quantity: 1,
+        },
+      ];
     }
     setCartItems(updated);
     saveCart(updated);
@@ -63,7 +86,10 @@ export const CartProvider = ({ children }) => {
     saveCart([]);
   };
 
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cartItems.reduce(
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
+    0
+  );
 
   return (
     <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, total }}>
